@@ -1,0 +1,2609 @@
+\documentclass[a4paper,oneside,12pt]{extarticle}
+ \topmargin  2pt % = in
+ \headheight 2pt % = in
+ \headsep    2pt % = in
+ \footskip   30pt % = in
+%
+ \columnsep    10pt   % = 0.138in
+ \columnseprule 0pt
+
+ \marginparwidth 21pt % = 0.281in
+ \footnotesep   1pt % = in
+%
+ \parskip 5pt
+ \pagedepth 10.8in
+ \oddsidemargin 10pt
+ \evensidemargin 10pt
+%
+\textwidth 170mm
+\textheight 235mm
+\hoffset = -5mm
+%\voffset = -5mm
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{amsmath}
+%\usepackage{euscript}
+\usepackage{hyperref}
+%
+% Russian for Linux Latex2e
+%\usepackage [koi8-r]{inputenc}
+\usepackage [utf8]{inputenc}
+\usepackage [russian,english]{babel}
+\usepackage[sort&compress,square,numbers]{natbib}
+\tolerance=9999
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% Formulas enumeration %%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand {\theequation}{\arabic{subsubsection}.\arabic{equation}}
+\renewcommand {\thesubsubsection}{\arabic{subsubsection}}
+\makeatletter
+\@addtoreset {equation} {subsubsection}
+\makeatother
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\vec}[1]{{\mbox{\boldmath$#1$}}}
+\newcommand{\vecsm}[1]{{\mbox{\scriptsize \boldmath$#1$}}}
+\def \dprime {\prime\prime}
+\def \tprime {\prime\prime\prime}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\title{Photoemission from 4f shell of rare-earth compounds}
+\author{Dmitry Usachov}
+
+\begin{document}
+\maketitle
+\begin{center} 
+\it Saint Petersburg State University, Russia
+\end{center}
+
+\tableofcontents
+\newpage
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection {4f shell Hamiltonian and its eigenstates}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This text is a brief collection of information, which is needed to calculate angle-resolved 4f photoemission spectra of lanthanides.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Total 4f-shell Hamiltonian}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+The total $4f$-shell Hamiltonian is
+%
+\begin{equation}
+\hat{H} = \hat{H}_{CF} + \hat{H}_{ES} + \hat{H}_{SO} + \hat{H}_{CI} + \hat{H}_{CEF} + \hat{H}_{mag} +\ldots \,.
+\end{equation}
+%
+Here, $\hat{H}_{CF}$ is a Hamiltonian of a central-field approximation.
+The nonrelativistic electrostatic part, which takes into account Coulomb interaction between electrons, is
+$$
+\hat{H}_{ES} = \sum_{k=0,2,4,6} F^k(nf,nf) \hat{f}_k = \sum_{k=0}^3 \hat{e}_k E^k
+$$
+%
+Its good quantum numbers are $LMSM_S$. The matrix elements are discussed in section \ref{ssec:H_ES}. The matrices $\hat{e}_k$ are tabulated in \cite{NielsonKoster} for all $f^n$ configurations, so there is no need to calculate them.
+
+The spin-orbit interaction is 
+$$
+\hat{H}_{SO} = \sum_i \xi(r_i) \vec{l}_i \cdot \vec{\sigma}_i
+$$
+%
+Its good quantum numbers are $JM_J$. Calculation of its matrix elements is discussed in section \ref{ssec:SO}.
+
+The free-ion configuration interaction (CI) Hamiltonian consists of two parts with two-body and three-body corrections:
+$$
+\hat{H}_{CI} = \alpha \hat{L}^2 + \beta \hat{G} (G_2) + \gamma \hat{G} (R_7)
++ \sum_{i=2,3,4,6,7,8} T^i \hat{t}_i \,,
+$$
+where $\hat{G}(G_2)$ and $\hat{G}(R_7)$ are Casimir's operators for groups $G_2$ and $R_7$. The respective matrix elements are discussed in section \ref{ssec:CI}. The last term is a Judd's three-body correction, which is neglected and not discussed here.
+
+$\hat{H}_{CEF}$ is a crystal electric field term, which is absent in the case of free ion. Its matrix elements are discussed in section \ref{ssec:CEF}.
+
+The part $\hat{H}_{mag}$ takes into account influence of magnetization and external magnetic field (Zeeman term). Magnetization is temperature-dependent and must be calculated in a self-consistent way based on certain approximations. This is discussed in sections \ref{ssec:Mag}-\ref{ssec:MField}.
+
+In order to calculate the total Hamiltonian matrix the following parameters are required (see \cite{Carnall_1989}):\\
+$E^1$, $E^2$, $E^3$ -- electrostatic parameters (it is assumed that $E^0=0$, since it gives only a constant energy shift),\\
+$\xi$ -- SO parameter,\\
+$\alpha$, $\beta$, $\gamma$ -- Trees CI parameters,\\
+T2,T3,T4,T6,T7,T8 -- Casimir three-body CI parameters (ignored here),\\
+M0, M2, M4, P2, P4, P6 -- Judd parameters (ignored here),\\
+$\vec{B}$ -- external magnetic field (interacts with both orbital and spin moments),\\
+$\vec{B}_M$ -- effective exchange magnetic field.  It interacts only with spin moments, however, if mixing of different J is neglected, the exchange field acts similarly to the external field, because spin moment is proportional to the total moment (see section \ref{ssec:MField}).\\
+$B_k^q$ -- CEF parameters.\\
+Most of these parameters are usually estimated from experimental data (e.g. optical absorption \cite{Carnall_1989}).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Nonrelativistic electrostatic Hamiltonian and determinantal product states}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+The nonrelativistic Hamiltonian of an atom with N electrons is
+%
+$$
+H = - \frac{\hbar^2}{2m} \sum_{i=1}^N \nabla_i^2 - \sum_{i=1}^N \frac{Ze^2}{r_i} + \sum_{i<j}^N \frac{e^2}{r_{ij}}
+$$
+if the nuclear mass is assumed to be infinite. Exact solution is possible only for $N=1$. The most common approximation is the central field approximation, where the electron moves in the spherically averaged potential of other electrons. Then the Hamiltonian becomes
+%
+$$
+H_{CF} = \sum_{i=1}^N \left[ - \frac{\hbar^2}{2m}\nabla_i^2 + U(r_i) \right]
+$$
+%
+The difference $H-H_{CF}$ is treated as a perturbation potential
+%
+$$
+H-H_{CF} = H_{ES} = \sum_{i=1}^N \left[ - \frac{Ze^2}{r_i}\nabla_i^2 - U(r_i) \right] + \sum_{i<j}^N \frac{e^2}{r_{ij}}
+$$
+%
+The Shr\"odinger equation for the central field
+$$
+\sum_{i=1}^N \left[ - \frac{\hbar^2}{2m}\nabla_i^2 + U(r_i) \right] \Psi = E_{cf} \Psi
+$$
+%
+can be separated by choosing a solution such that
+%
+$$
+\Psi = \sum_{i=1}^N \phi_i(a^i) \qquad \textrm{and} \qquad  E_{cf}=\sum_{i=1}^N E_i \,.
+$$
+%
+Each electron moving in the central field will then satisfy equations of the type
+%
+$$
+\left[ - \frac{\hbar^2}{2m}\nabla^2 + U(r) \right] \phi_i(a^i) = E(a^i)\phi_i(a^i)
+$$
+%
+where $a^i$ is a set of quantum numbers $\{nlm\}$. After introducing the spin coordinate $\sigma$, which may equal $\pm\frac{1}{2}$, and a spin function $\delta(m_s,\sigma)$ satisfying the orthonormality relation
+%
+$$
+\sum_\sigma \delta(m_s,\sigma) \delta(m_s^\prime,\sigma) = \delta(m_s, m_s^\prime) \,,
+$$
+%
+the one-electron eigenfunctions become
+%
+$$
+\phi(nlmm_s) = \delta(m_s,\sigma) r^{-1} R_{nl}(r) Y_l^m(\theta, \phi) \,.
+$$
+%
+Here, we write $r^{-1}$ separately to avoid $r^2$ in the radial matrix elements.
+The $N$-electron wave function then can be written as
+%
+$$
+\Psi = \sum_{i=1}^N \phi(k_i)
+$$
+%
+where $k_i$ is a set of quantum numbers $\{nlmm_s\}$ of the $i^{\textrm{th}}$ electron. To satisfy Pauli exclusion principle, we must choose an antisymmetric linear combination of these solutions. Thus, we arrive to the Slater determinant wave function, which is
+%
+$$
+\Psi = \frac{1}{\sqrt{N!}} \,
+\begin{array}{|cccc|}
+\phi(k_1, r_1) & \phi(k_2, r_1) &\ldots & \phi(k_N, r_1)\\
+\phi(k_1, r_2)& \phi(k_2, r_2) &\ldots & \phi(k_N, r_2)\\
+\vdots & \vdots &\ddots & \vdots\\
+\phi(k_1, r_N) & \phi(k_2, r_N) &\ldots & \phi(k_N, r_N)
+\end{array}
+$$
+%
+For the $4f^N$ shell we have $4l+2=14$ orbitals, $N$ of which are occupied by electrons. The number of possible states is the number of possibilities to occupy $N$ orbitals. It is given by the binomial coefficient
+$$
+\left(
+\begin{array}{c}
+4l+2 \\
+N
+\end{array}
+\right) = \frac{(4l+2)!}{N!(4l+2-N)!} \,.
+$$
+%
+For example, for Gd $4f^7$ shell there are 3432 possible (basis) states. Each Slater determinant can be written using the following short notation
+%
+$$
+\{k_1, k_2, \ldots k_N\}.
+$$
+%
+Obviously, when the two functions (or coordinates of two electrons) are interchanged, the phase factor of $(-1)^p$ appears, where $p$ is the number of permutations, e.g.
+$$
+\{k_1, k_2, k_3\} = - \{k_2, k_1, k_3\} = \{k_2, k_3, k_1\} \,.
+$$
+%
+Determinantal product states usually are not the eigenstates of the Hamiltonian, but they form a complete basis in which any eigenstate can be expanded. This basis is used in the program LANTHANIDE \cite{Lanthanide_2001}, which is able to calculate the eigenstates of the $4f$ shell Hamiltonian.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Matrix elements for determinantal product states}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+See \cite{Judd}, p.~17.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Angular momentum operators and states}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+One-particle orbital angular momentum operator is
+$$
+\vec{l} = \vec{r} \times \vec{p} = -i\hbar\, \vec{r} \times \vec{\nabla}
+$$
+Alternatively,
+\begin{align}
+l_x = y p_z - z p_y = -i\hbar\, \left(y \frac{\partial}{\partial z} - z \frac{\partial}{\partial y} \right) \\
+l_y = z p_x - x p_z = -i\hbar\, \left(z \frac{\partial}{\partial x} - x \frac{\partial}{\partial z} \right) \\
+l_z = x p_y - y p_x = -i\hbar\, \left(x \frac{\partial}{\partial y} - y \frac{\partial}{\partial x} \right)
+\end{align}
+%
+From these expressions it is easy to obtain the following commutation relation
+%
+$$
+[l_x, l_y] = l_x l_y - l_y l_x = i \hbar l_z
+$$
+The general commutation relations valid for any (orbital and spin) angular momentum operator are
+\begin{align}
+[j_x, j_y] = i \hbar j_z \\
+[j_y, j_z] = i \hbar j_x \\
+[j_z, j_x] = i \hbar j_y
+\end{align}
+%
+The shift (ladder) operators are defined as
+$$
+J_{\pm}\equiv J_x \pm i J_y.
+$$
+%
+The eigenfunctions of the angular momentum operators satisfy the following relations
+\begin{align}
+J_z | j,m\rangle = \hbar m | j,m\rangle \\
+J^2 | j,m\rangle = \hbar^2 j(j+1) | j,m\rangle \\
+J_{\pm} | j,m\rangle = \hbar \sqrt{(j\mp m)(j \pm m + 1)} | j,m\pm 1\rangle
+\end{align}
+%
+Let us consider a commutator of $J_{\pm}$ with spherical harmonic:
+\begin{multline}
+[J_{\pm},Y_j^m] \psi = J_{\pm} Y_j^m \psi - Y_j^m J_{\pm} \psi = 
+\left(\psi J_{\pm} Y_j^m + Y_j^m J_{\pm} \psi \right) - Y_j^m J_{\pm} \psi = \\ =
+\hbar \sqrt{(j\mp m)(j \pm m + 1)} Y_j^{m\pm 1} \psi
+\end{multline}
+%
+Here we used the property of the derivative of a product.
+
+{\bf Note that from hereon we use atomic units, where $\hbar=1$.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Irreducible tensor operators and Wigner–Eckart theorem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+An irreducible tensor operator of rank $k$ is defined as an operator $T^{(k)}$ whose $2k+1$ components $T_q^{(k)}$ ($q=-k,\ldots k$) are transformed under rotation of the coordinate system in the same way as do the spherical harmonic operators. Equivalently, they satisfy the same commutation rule with respect to the angular momentum $J$ as the spherical harmonics, that is
+\begin{equation}
+[J_{\pm}, T_q^{(k)}] = \sqrt{(k\mp q)(k \pm q + 1)} T_{q\pm 1}^{(k)},
+\end{equation}
+\begin{equation}
+[J_z, T_q^{(k)}] = q T_{q}^{(k)}.
+\end{equation}
+
+Examples of irreducible tensor operators are spherical tensor operators, which are defined as renormalized spherical harmonics
+$$
+C_q^{(k)} \equiv \sqrt{\frac{4\pi}{2k+1}} Y_k^q
+$$
+%
+The spherical functions with $k=0,1$ are
+$$
+Y_0^0 = \frac{1}{2} \sqrt{\frac{1}{\pi}} \,, \qquad
+Y_1^{-1} = \frac{1}{2} \sqrt{\frac{3}{2\pi}} \sin\theta \, e^{-i \phi}
+$$
+$$
+Y_1^{0} = \frac{1}{2} \sqrt{\frac{3}{\pi}} \cos\theta \,, \qquad
+Y_1^{1} = \frac{-1}{2} \sqrt{\frac{3}{2\pi}} \sin\theta \, e^{i \phi} \,.
+$$
+
+Now let us consider the operators $x$, $y$ and $z$. 
+Obviously, they can be expanded in spherical tensor operators as
+%
+$$
+x = \frac{C_{-1}^{(1)} - C_{1}^{(1)}}{\sqrt{2}} r \,,\qquad 
+y = i\, \frac{C_{-1}^{(1)} + C_{1}^{(1)}}{\sqrt{2}} r  \,,\qquad
+z = C_{0}^{(1)} r
+$$
+%
+where
+$$
+C_{q}^{(1)} = \sqrt{\frac{4\pi}{3}} Y_1^{q}
+$$
+are rank-1 spherical tensor operators, because $Y_l^{m}$ are spherical tensors of rank $l$.
+
+Similarly, any vector $\vec{V}$ can be written as an irreducible tensor operator with components
+$$
+\left\{ \frac{V_x-iV_y}{\sqrt{2}},\, V_z,\, -\frac{V_x+iV_y}{\sqrt{2}} \right\}
+$$
+
+Thus, for irreducible tensor operators we see that
+\begin{equation}
+T_{\pm 1}^{(1)} = \frac{\mp 1}{\sqrt{2}} (T_x \pm i T_y), \qquad T_{0}^{(1)} = T_z
+\end{equation}
+
+It can be shown that $J$ is a tensor operator of rank 1 with components $\{ J_-/\sqrt{2},\, J_z,\, -J_+/\sqrt{2}\}$.
+
+The Wigner-Eckart theorem states that matrix elements of irreducible tensor operators in the basis of angular momentum eigenstates can be expressed as the product of two factors, one of which is independent of angular momentum orientation, and the other is a Clebsch–Gordan coefficient:
+%
+\begin{equation}
+\langle j^{\prime} m_j^{\prime} \mid T^{(k)}_q \mid j m_j \rangle = 
+\frac{(-1)^{2k}}{\Pi_{j^{\prime}}}
+C_{j m_j \, k q}^{j^{\prime} m_j^{\prime}}
+\langle j^{\prime} \mid\mid T^{(k)} \mid\mid j \rangle
+\label{eq:WE}
+\end{equation}
+%
+where $k$ is the tensor rank, $\langle j^{\prime} \mid\mid T^{(k)} \mid\mid j \rangle$ is a so-called reduced matrix element, and
+$$\Pi_{ab\ldots}\equiv\sqrt{(2a+1)(2b+1)\ldots} \,.$$
+%
+Note that there are different conventions for reduced matrix elements (normalization and phase factors may differ). Here, we use the same convention as used by Racah, Wigner, Wybourne and Cowan.
+
+It can be shown that for any rank $k$ the reduced matrix element of spherical tensor operator in the basis of spherical functions is
+\begin{equation}
+\langle l^{\prime} \mid\mid \mathbf{C}^{(k)} \mid\mid l \rangle = 
+(-1)^k \Pi_{l^{\prime}} C_{l^{\prime} 0 \, k 0}^{l 0} = \Pi_{l} C_{l 0 \, k 0}^{l^{\prime} 0}
+\label{eq:lCl}
+\end{equation}
+For $k=1$, this matrix element is nonzero only for $\Delta l=\pm 1$.
+
+Let us find the reduced matrix elements for the angular momentum operators. For the operator $J_z$ we may write
+\begin{equation}
+m_j\delta_{\alpha jm_j, \alpha^\prime j^\prime m_j^\prime} = \langle \alpha jm_j \mid J_z \mid \alpha^\prime j^\prime m_j^\prime \rangle =
+\langle \alpha jm_j \mid J_0^{(1)} \mid \alpha^\prime j^\prime m_j^\prime \rangle =
+\frac{1}{\Pi_j} C_{j^\prime m_j^\prime\, 10}^{jm_j} \langle j || J_0^{(1)} || j^\prime \rangle
+\end{equation}
+%
+from which we find that
+%
+\begin{equation}
+\langle j || J_0^{(1)} || j^\prime \rangle = m_j \delta_{j,j^\prime} \sqrt{2j+1}
+\left( C_{j m_j, 10}^{jm_j} \right)^{-1}
+\end{equation}
+%
+Using
+$$
+C_{j m_j, 10}^{jm_j} = \frac{m_j}{\sqrt{j(j+1)}} 
+$$
+we obtain the reduced matrix element
+\begin{equation}
+\langle j || J_0^{(1)} || j^\prime \rangle = \delta_{j,j^\prime} \sqrt{j(j+1)(2j+1)}
+\end{equation}
+%
+Similarly,
+\begin{equation}
+\langle j || J_{\pm} || j^\prime \rangle = \mp \sqrt{2}\delta_{j,j^\prime} \sqrt{j(j+1)(2j+1)}
+\end{equation}
+Thus, for any $q$
+\begin{equation}
+\langle j || J_{q}^{(1)} || j^\prime \rangle = \delta_{j,j^\prime} \sqrt{j(j+1)(2j+1)}
+\end{equation}
+and
+\begin{equation}
+\langle l || l_q^{(1)} || l^\prime \rangle = \delta_{l,l^\prime} \sqrt{l(l+1)(2l+1)}
+\end{equation}
+and
+\begin{equation}
+\langle s || s_q^{(1)} || s^\prime \rangle = \delta_{s,s^\prime} \sqrt{s(s+1)(2s+1)} = \delta_{s,s^\prime} \sqrt{\frac{3}{2}}
+\end{equation}
+%
+
+Let us consider the electric dipole transition operator
+\begin{equation}
+\vec{\varepsilon} \cdot \vec{r} = 
+r(\varepsilon_x \sin\theta\cos\phi + \varepsilon_y \sin\theta\sin\phi + \varepsilon_z \cos\theta) = 
+\sqrt{\frac{4\pi}{3}} r \left(
+\frac{\varepsilon_x + i\varepsilon_y}{\sqrt{2}} Y_1^{-1} +
+\varepsilon_z Y_1^{0} +
+\frac{-\varepsilon_x + i\varepsilon_y}{\sqrt{2}} Y_1^{1}
+\right)
+\label{eq:expansion}
+\end{equation}
+%
+Thus, we have
+%
+$$
+\vec{\varepsilon} \cdot \vec{r} = 
+r \sum_{q=-1}^1 \varepsilon_q C_{q}^{(1)}
+$$
+%
+Then, for the matrix element of one-electron transition from $|j m_j\rangle$ to $|j^{\prime} m_j^{\prime}\rangle$ we have
+%
+$$
+\langle j^{\prime} m_j^{\prime} \mid \vec{\varepsilon} \cdot \vec{r} \mid j m_j \rangle = 
+\frac{1}{\Pi_{j^{\prime}}}
+\langle j^{\prime} \mid\mid r\mathbf{C}^{(1)} \mid\mid j \rangle  \,
+\sum_q  \varepsilon_q C_{j m_j \, 1 q}^{j^{\prime} m_j^{\prime}}
+$$
+Thus, for linear polarization $\Delta m=0$, while for circular $\Delta m=\pm 1$ depending on left or right polarization.
+The cross section averaged over the ground states $m_j$ (nonmagnetic case) and summed over the final states $m_j^{\prime}$ is
+\begin{multline}
+\sigma(j^{\prime},j) = \frac{1}{\Pi_j^2} \sum_{m_j m_j^{\prime}}
+|\langle j^{\prime} m_j^{\prime} \mid \vec{\varepsilon} \cdot \vec{r} \mid j m_j \rangle |^2 = 
+\frac{|\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2}{\Pi_{jj^{\prime}}^2}  
+\sum_{m_j m_j^{\prime}} \left| \sum_{q} \varepsilon_q
+C_{j m_j \, 1 q}^{j^{\prime} m_j^{\prime}}\right|^2 = \\
+= \frac{|\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2}{\Pi_{jj^{\prime}}^2}  
+\sum_{m_j m_j^{\prime}q} |\varepsilon_q|^2
+\left(C_{j m_j \, 1 q}^{j^{\prime} m_j^{\prime}}\right)^2
+= \frac{1}{\Pi_{1 j}^2} |\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2
+\end{multline}
+%
+For a one-electron transition between the states $|l\rangle$ and $|l^{\prime}\rangle$, the cross section averaged over $m$ is
+\begin{equation}
+\sigma(l^{\prime},l) = 
+\frac{1}{\Pi_{1 l}^2} |\langle l^{\prime} || r\mathbf{C}^{(1)} || l \rangle|^2 =
+\left(C_{l 0 \, 1 0}^{l^{\prime} 0} \right)^2 \frac{1}{3} R^2(l^{\prime},l)
+\label{eq:sigma_1}
+\end{equation}
+%
+where $R(l^{\prime},l)$ is a radial matrix element of the position operator $r$
+$$
+R(l^{\prime},l) = \int_0^{\infty} r R_{n^{\prime}l^{\prime}} R_{nl} dr \,.
+$$
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Matrix elements for angular momentum eigenstates}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+For an type-F operator ($F=\sum f_i$, e.g. dipole operator), the matrix element is related to one-electron matrix element as (Eq.~2-74 in \cite{Wybourne})
+$$
+\langle l^N; wLS || F || l^{N-1}(w^{\prime} L^{\prime} S^{\prime}) l^{\prime}; \psi \rangle = \sqrt{N}
+Q(wLS|w^{\prime}L^{\prime} S^{\prime}) \langle l^{N-1} l_N; wLS || f_N || l^{N-1}(wL^{\prime} S^{\prime}) l^{\prime}_N; \psi \rangle
+$$
+The matrix elements of the scalar product of spherical tensor operators is given by (Eq.~11.47 in \cite{Cowan})
+%
+\begin{multline}
+\langle \alpha_1 j_1 \alpha_2 j_2; jm \mid \mathbf{T}^{(k)}\cdot\mathbf{U}^{(k)} \mid \alpha_1^{\prime} j_1^{\prime} \alpha_2^{\prime} j_2^{\prime}; j^{\prime}m^{\prime} \rangle = \\ =
+\delta_{jm, j^{\prime}m^{\prime}} (-1)^{j_1^{\prime} + j_2 + j}
+\left \{
+\begin{array}{ccc}
+j_1 & j_2 & j \\
+j_2^{\prime} & j_1^{\prime} & k
+\end{array}
+\right \}
+\langle \alpha_1 j_1 || \mathbf{T}^{(k)} || \alpha_1^{\prime} j_1^{\prime} \rangle
+\langle \alpha_2 j_2 || \mathbf{U}^{(k)} || \alpha_2^{\prime} j_2^{\prime} \rangle
+\label{eq:Tk1}
+\end{multline}
+%
+For tensor operator $\mathbf{T}^{(k)}$ operating only on part 1 of the system, the matrix element is given by (Eq.~2-48 in \cite{Wybourne}, and Eq.~11.38 in \cite{Cowan})
+\begin{multline}
+\langle \alpha_1 j_1 \alpha_2 j_2; j || \mathbf{T}^{(k)} || \alpha_1^{\prime} j_1^{\prime} \alpha_2^{\prime} j_2^{\prime}; j^{\prime} \rangle =
+\delta_{\alpha_2 j_2, \alpha_2^{\prime} j_2^{\prime}} (-1)^{j_1 + j_2 + j^{\prime} + k} \Pi_{j j^{\prime}}
+\langle \alpha_1 j_1 || \mathbf{T}^{(k)} || \alpha_1^{\prime} j_1^{\prime} \rangle
+\left \{
+\begin{array}{ccc}
+j & j^{\prime} & k \\
+j_1^{\prime} & j_1 & j_2
+\end{array}
+\right \}
+\label{eq:Tk1}
+\end{multline}
+%
+For tensor operator $\mathbf{U}^{(k)}$ operating only on part 2 of the system, the matrix element is given by (Eq.~2-49 in \cite{Wybourne}, and Eq.~11.39 in \cite{Cowan})
+\begin{multline}
+\langle \alpha_1 j_1 \alpha_2 j_2; j || \mathbf{U}^{(k)} || \alpha_1^{\prime} j_1^{\prime} \alpha_2^{\prime} j_2^{\prime}; j^{\prime} \rangle =
+\delta_{\alpha_1 j_1, \alpha_1^{\prime} j_1^{\prime}} (-1)^{j_1 + j_2^{\prime} + j + k} \Pi_{j j^{\prime}}
+\langle \alpha_2 j_2 || \mathbf{U}^{(k)} || \alpha_2^{\prime} j_2^{\prime} \rangle
+\left \{
+\begin{array}{ccc}
+j & j^{\prime} & k \\
+j_2^{\prime} & j_2 & j_1
+\end{array}
+\right \}
+\label{eq:Uk2}
+\end{multline}
+%
+
+Scalar product of two tensor operators is defined as
+$$
+\mathbf{T}^{(k)} \cdot \mathbf{U}^{(k)} \equiv
+\sum_q (-1)^q \mathbf{T}^{(k)}_q \mathbf{U}^{(k)}_{-q} \,.
+$$
+%
+In the particular case when $\mathbf{T}^{(k)}$ and $\mathbf{U}^{(k)}$ operate only on $\alpha_1 j_1 m_1$ and $\alpha_2 j_2 m_2$, respectively, the matrix element of the scalar product is (Eq.~11.47 in \cite{Cowan})
+%
+\begin{multline}
+\langle \alpha_1 j_1 \alpha_2 j_2; jm | \mathbf{T}^{(k)} \cdot \mathbf{U}^{(k)} | \alpha_1^{\prime} j_1^{\prime} \alpha_2^{\prime} j_2^{\prime}; j^{\prime}m^{\prime} \rangle = \\ =
+\delta_{jm, j^{\prime}m^{\prime}} (-1)^{j_1^{\prime} + j_2 + j} 
+\left \{
+\begin{array}{ccc}
+j_1 & j_2 & j \\
+j_2^{\prime} & j_1^{\prime} & k
+\end{array}
+\right \}
+\langle \alpha_1 j_1 || \mathbf{T}^{(k)} || \alpha_1^{\prime} j_1^{\prime} \rangle
+\langle \alpha_2 j_2 || \mathbf{U}^{(k)} || \alpha_2^{\prime} j_2^{\prime} \rangle
+\label{eq:TU}
+\end{multline}
+
+Fractional parentage coefficients and Wigner symbols (3-j, 6-j and 9-j) can be calculated e.g. with the help of Mapple libraries RACAH and JUCYS \cite{Gaigalas_2001}. However, there are mistakes in Table 1 of Ref.~\cite{Gaigalas_2001} and the calculated fractional parentage coefficients for more than half-filled shell may have wrong sign. To calculate correct coefficients for $l^q$ configurations with $q>2l+2$ one can use the following relation (Eq.~2-22 in \cite{Wybourne}):
+$$
+Q(l^{4l+2-q} wLS|l^{4l+1-q} w^{\prime}L^{\prime} S^{\prime}) = 
+(-1)^{L^{\prime}+S^{\prime}+L+S-l-s}
+\sqrt{\frac{q+1}{4l+2-q}} \frac{\Pi_{L^{\prime} S^{\prime}}}{\Pi_{LS}}
+Q(l^{q+1} w^{\prime}L^{\prime} S^{\prime}|l^q wLS)
+$$
+For $q=2l+2$ (e.g. for $f^8$) this equation must be preceded by a factor $(-1)^{(\nu^{\prime}-1)/2}$, where $\nu$ is a seniority number.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Matrix elements of electrostatic interaction in LS basis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\label{ssec:H_ES}
+%
+Coulomb interaction can be expanded in the following series:
+$$
+V_{ij} = \frac{e^2}{r_{ij}} = e^2 \sum_k \frac{r_<^k}{r_>^{k+1}} P_k(\cos\gamma_{ij}) \,.
+$$
+Using spherical harmonics addition theorem the Legendre polinomials can be written as
+$$
+P_k(\cos\gamma_{ij}) = \frac{4\pi}{2k+1} \sum_q Y_k^{q*}(\theta_i,\phi_i) Y_k^q(\theta_j,\phi_j) =
+\sum_q (-1)^q  (\mathbf{C}^{(k)}_{-q})_i (\mathbf{C}^{(k)}_q)_j = \mathbf{C}^{(k)}_i \cdot \mathbf{C}^{(k)}_j
+$$
+
+Consider two electrons in possibly different shells $nl$, which form a two-electron state $LS$. Since the wave function must be antisymmetric, we have
+$$
+|n_a l_a, n_b l_b; LS \rangle =
+2^{-1/2} (|n_{a1}l_{a1},n_{b2}l_{b2}; LS\rangle - |n_{a2}l_{a2},n_{b1}l_{b1}; LS\rangle)
+$$
+where 1 and 2 refer to the coordinates of two electrons and the spin quantum numbers are omitted for brevity. Let us exchange the coupling sequence:
+\begin{multline}
+|n_{a2}l_{a2},n_{b1}l_{b1}; LS\rangle = \sum_{MM_S} C_{l_{a} m_{a},l_{b} m_{b}}^{LM}
+C_{s_{a} m_{sa},s_{b} m_{sb}}^{SM_S} 
+|n_{a2}l_{a2}\rangle |n_{b1}l_{b1}\rangle =\\
+(-1)^{l_{a}+l_{b}-L+s_{a}+s_{b}-S}\sum_{MM_S} C_{l_{b} m_{b}, l_{a} m_{a}}^{LM}
+C_{s_{b} m_{sb}, s_{a} m_{sa}}^{SM_S} 
+|n_{b1}l_{b1}\rangle |n_{a2}l_{a2}\rangle =\\
+(-1)^{l_{a}+l_{b}-L+s_{a}+s_{b}-S} |n_{b1}l_{b1},n_{a2}l_{a2}; LS\rangle = -(-1)^{l_{a}+l_{b}+L+S} |n_{b1}l_{b1},n_{a2}l_{a2}; LS\rangle
+\end{multline}
+Thus,
+$$
+|n_a l_a, n_b l_b; LS \rangle =
+2^{-1/2} (|n_{a1}l_{a1},n_{b2}l_{b2}; LS\rangle + (-1)^{l_{a}+l_{b}+L+S} |n_{b1}l_{b1},n_{a2}l_{a2}; LS\rangle)
+$$
+Because Coulomb operator commutes with angular momentum operators, its matrix elements are diagonal in $LS$.  Consider another state with same $LS$:
+$$
+|n_c l_c, n_d l_d; LS \rangle =
+2^{-1/2} (|n_{c1}l_{c1},n_{d2}l_{d2}; LS\rangle + (-1)^{l_{c}+l_{d}+L+S} |n_{d1}l_{d1},n_{c2}l_{c2}; LS\rangle)
+$$
+Consider Coulomb matrix element of two-particle operator $V_{12}=e^2/r_{12}$. Taking into account symmetry in regard to exchange of 1 and 2, we get
+\begin{multline}
+\langle n_a l_a, n_b l_b; LS \mid V_{12} \mid n_c l_c, n_d l_d; LS \rangle = 
+\langle n_{a1}l_{a1},n_{b2}l_{b2}; LS \mid V_{12} \mid n_{c1}l_{c1},n_{d2}l_{d2}; LS \rangle +\\
++(-1)^{l_{c}+l_{d}+L+S} \langle n_{a1}l_{a1},n_{b2}l_{b2}; LS \mid V_{12} \mid n_{d1}l_{d1},n_{c2}l_{c2}; LS \rangle
+\end{multline}
+Expanding the Coulomb potential in spherical tensor operators, we get
+\begin{multline}
+\langle n_a l_a, n_b l_b; LS \mid V_{12} \mid n_c l_c, n_d l_d; LS \rangle = \\
+e^2 \sum_k
+\langle n_{a1}l_{a1},n_{b2}l_{b2}; LS \mid \frac{r_<^k}{r_>^{k+1}} \mathbf{C}_1^{(k)} \cdot \mathbf{C}_2^{(k)} \mid n_{c1}l_{c1},n_{d2}l_{d2}; LS \rangle +\\
++(-1)^{l_{c}+l_{d}+L+S} \langle n_{a1}l_{a1},n_{b2}l_{b2}; LS \mid \frac{r_<^k}{r_>^{k+1}} \mathbf{C}_1^{(k)} \cdot \mathbf{C}_2^{(k)}  \mid n_{d1}l_{d1},n_{c2}l_{c2}; LS \rangle =\\
+\sum_k \left[ f_k(l_a, l_b; l_c, l_d) R^k(n_a l_a, n_b l_b; n_c l_c, n_d l_d) + g_k(l_a, l_b; l_d, l_c) R^k(n_a l_a, n_b l_b; n_d l_d, n_c l_c) \right]
+\end{multline}
+%
+where $R^k$ are radial integrals, $f_k$ and $g_k$ are obtained from \ref{eq:TU}
+$$
+f_k(l_a, l_b; l_c, l_d) = (-1)^{l_{b}+l_{c}+L} \langle l_a || \mathbf{C}^{(k)} || l_c \rangle
+\langle l_b || \mathbf{C}^{(k)} || l_d \rangle
+\left \{
+\begin{array}{ccc}
+l_a & l_b & L \\
+l_d & l_c & k
+\end{array}
+\right \}
+$$
+%
+$$
+g_k(l_a, l_b; l_d, l_c) = (-1)^{S} \langle l_a || \mathbf{C}^{(k)} || l_d \rangle
+\langle l_b || \mathbf{C}^{(k)} || l_c \rangle
+\left \{
+\begin{array}{ccc}
+l_a & l_b & L \\
+l_c & l_d & k
+\end{array}
+\right \}
+$$
+The two terms are the so-called direct and exchange terms. Note that the exchange term is spin-dependent. For triplet state ($S=1$) with parallel spins $g_k$ is negative and the energy is lower than for the singlet state ($S=0$) with antiparallel spins. This is the origin of exchange interaction.
+
+From the triangle rule for 6-j symbol components it is obvious that for $l_a=l_b=l_c=l_d=3$ the coefficients $f_k$ and $g_k$ are nonzero only for $k=0,2,4,6$.
+
+Matrix elements for more complex configurations with more electrons can be reduced to the two-electron matrix elements using recoupling and fractional parentage coefficients. All matrix elements for the $f^n$ configurations are given in \cite{NielsonKoster}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Matrix elements of spin-orbit interaction in LSJ basis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{ssec:SO}
+%
+In LSJ basis, spin-orbit matrix elements for $q\leq 2l+1$ are (Eq.~12.42 in \cite{Cowan} and Eq.~2.106 in \cite{Wybourne})
+\begin{multline}
+\langle l^q wLSJM_J \mid \xi_{nl} \sum_i \mathbf{s}_i \cdot \mathbf{l}_i \mid l^q w^{\prime}L^{\prime}S^{\prime}JM_J \rangle = \\ =
+\xi_{nl} (-1)^{J+L^{\prime}+S}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & 1 \\
+S^{\prime} & S & J
+\end{array}
+\right \}
+\sqrt{l(l+1)(2l+1)}
+\langle l^q wLS || V^{11} || l^q w^{\prime}L^{\prime}S^{\prime} \rangle
+\end{multline}
+%
+where (Eq.~11.68 in \cite{Cowan})
+\begin{multline}
+\langle l^q wLS || V^{11} || l^q w^{\prime}L^{\prime}S^{\prime} \rangle = 
+q \sqrt{\frac{3}{2}} \Pi_{LSL^{\prime}S^{\prime}} 
+\sum_{w^{\dprime}L^{\dprime}S^{\dprime}} Q(wLS|w^{\dprime}L^{\dprime}S^{\dprime})
+Q(w^{\prime}L^{\prime}S^{\prime}|w^{\dprime}L^{\dprime}S^{\dprime}) \\ \times
+(-1)^{L^{\dprime}+S^{\dprime}+L+S+l+1/2}
+\left \{
+\begin{array}{ccc}
+S & S^{\prime} & 1 \\
+\frac{1}{2} & \frac{1}{2} & S^{\dprime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & 1 \\
+l & l & L^{\dprime}
+\end{array}
+\right \}
+\end{multline}
+%
+For $q> 2l+1$, the SO matrix differ only in sign (for $f^8$ its absolute values are equal to the $f^6$ case). Note that the phase factor is different from the case of SL coupling (used by Wybourne \cite{Wybourne}). Also it is worth noting that
+$$
+\langle w^{\prime}L^{\prime}S^{\prime} || V^{11} || wLS \rangle = 
+(-1)^{L^{\prime}-L+S^{\prime}-S} \langle wLS || V^{11} || w^{\prime}L^{\prime}S^{\prime} \rangle
+$$
+%
+SO interaction leads to mixing of LS states (intermediate coupling). Good quantum numbers are only $JM_J$.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Configuration interaction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{ssec:CI}
+%
+In the LS basis the matrix elements of the Hamiltonian
+$$
+\hat{H}_{CI} = \alpha \hat{L}^2 + \beta \hat{G} (G_2) + \gamma \hat{G} (R_7)
+$$
+can be calculated from a set of quantum numbers $L$, $U=\{u_1,u_2\}$ and $W=\{w_1,w_2,w_3\}$ as \cite{Gerken_1983}
+$$
+H_{CI} = \alpha L(L+1) + \frac{\beta}{12} (u_1^2 + u_1 u_2 + u_2^2 + 5u_1 + 4 u_2) + 
+\frac{\gamma}{10} (w_1(w_1+5) + w_2(w_2+3) + w_3(w_3+1))
+$$
+%
+These matrix elements are diagonal in all quantum numbers.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Crystal electric field splitting}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{ssec:CEF}
+%
+CEF potential can be expanded in spherical tensors as
+%
+$$
+V_{CEF} = \sum_{k,q} B_q^k \mathbf{C}_q^{(k)} \frac{r^k}{\langle r^k \rangle}
+$$
+The equivalent CEF Hamiltonian is
+$$
+H_{CEF} = \sum_{k,q,i} B_q^k (\mathbf{C}_q^{(k)})_i
+$$
+where the summation over $i$ is over all electrons of the ion. Due to symmetry,
+$$
+B_{-q}^k = (-1)^q B_q^{k*}
+$$
+The potential does not act on spin. Therefore, the matrix elements in LSJ coupling are
+%
+$$
+\langle l^N wLSJM_J \mid H_{CEF} \mid l^N w^{\prime}L^{\prime}SJ^{\prime}M_J^{\prime} \rangle =
+\sum_{k,q} B_q^k \langle l^N wLSJM_J \mid \mathbf{U}_q^{(k)} \mid l^N w^{\prime}L^{\prime}SJ^{\prime}M_J^{\prime} \rangle
+\langle l || \mathbf{C}^{(k)} || l \rangle
+$$
+%
+The matrix element on the right side can be reduced (using Eq.~\ref{eq:WE} and \ref{eq:Tk1}) as
+%
+\begin{multline}
+\langle l^N wLSJM_J \mid \mathbf{U}_q^{(k)} \mid l^N w^{\prime}L^{\prime}SJ^{\prime}M_J^{\prime} \rangle =
+\frac{1}{\Pi_{J}}
+C_{J^{\prime} M_J^{\prime} \, k q}^{J M_J}
+\langle l^N wLSJ || \mathbf{U}^{(k)} || l^N w^{\prime}L^{\prime}SJ^{\prime} \rangle = \\ =
+(-1)^{L + S + J^{\prime} + k} \Pi_{J^{\prime}} C_{J^{\prime} M_J^{\prime} \, k q}^{J M_J}
+\left \{
+\begin{array}{ccc}
+J & J^{\prime} & k \\
+L^{\prime} & L & S
+\end{array}
+\right \}
+\langle l^N wLS || \mathbf{U}^{(k)} || l^N w^{\prime}L^{\prime}S^{\prime} \rangle
+\end{multline}
+%
+(Note the wrong phase in Eq.~6.5 of Wybourne \cite{Wybourne}.) Hence, using Eq.~\ref{eq:lCl} we obtain
+%
+\begin{multline}
+\langle l^N wLSJM_J \mid H_{CEF} \mid l^N w^{\prime}L^{\prime}SJ^{\prime}M_J^{\prime} \rangle = \\ =
+\sum_{k,q} B_q^k C_{J^{\prime} M_J^{\prime} \, k q}^{J M_J}
+(-1)^{L + S + J^{\prime}+k} \Pi_{l J^{\prime}}
+C_{l 0 \, k 0}^{l 0}
+\left \{
+\begin{array}{ccc}
+J & J^{\prime} & k \\
+L^{\prime} & L & S
+\end{array}
+\right \} 
+\langle l^N wLS || \mathbf{U}^{(k)} || l^N w^{\prime}L^{\prime}S \rangle
+\end{multline}
+%
+Due to $C_{l 0 \, k 0}^{l 0}$, terms with odd $k$ vanish. The reduced matrix elements of the tensor $\mathbf{U}^{(k)}$ can be taken from the tables of Nielson and Koster \cite{NielsonKoster}, or calculated as (Eq.~11.53 in \cite{Cowan})
+%
+\begin{multline}
+\langle l^N wLS || \mathbf{U}^{(k)} || l^N w^{\prime}L^{\prime}S^{\prime} \rangle = \\ =
+\delta_{SS^{\prime}} N \Pi_{LL^{\prime}} \sum_{w^{\dprime}L^{\dprime}S^{\dprime}} Q(wLS|w^{\dprime}L^{\dprime}S^{\dprime})
+Q(w^{\prime}L^{\prime}S^{\prime}|w^{\dprime}L^{\dprime}S^{\dprime})
+(-1)^{L^{\dprime}+L+l+k}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & k \\
+l & l & L^{\dprime}
+\end{array}
+\right \}
+\end{multline}
+%
+for $N\leq 2l+1$. For conjugate shell $l^{4l+2-N}$ the reduced matrix elements of $\mathbf{U}^{(k)}$ differ by the factor of $(-1)^{k+1}$. Note that
+$$
+\langle w^{\prime}L^{\prime}S^{\prime} || \mathbf{U}^{(k)} || wLS \rangle =
+(-1)^{L^{\prime}-L} \langle wLS || \mathbf{U}^{(k)} || w^{\prime}L^{\prime}S^{\prime} \rangle
+$$
+
+For the $f$ shell, $k$ may take values $0,2,4,6$. $J$ and $M_J$ cease to be good quantum numbers. 
+For intermediate coupling we may write
+%
+\begin{equation}
+\langle l^N JM_J \mid H_{CEF} \mid l^N J^{\prime}M_J^{\prime} \rangle = 
+\sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}}
+\delta_{SS^{\prime}}
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+\langle l^N wLSJM_J \mid H_{CEF} \mid l^N w^{\prime}L^{\prime}SJ^{\prime}M_J^{\prime} \rangle
+\end{equation}
+
+As a simplest approximation we may assume LSJ coupling and $J^{\prime}=J$, and consider only mixing of $M_J$ states.
+
+For $J^{\prime}=0$ (e.g. Eu$^{3+}$) the state cannot be split. In the particular case of spherically symmetric shell with $L^{\prime}=0$ (e.g. Eu$^{2+}$), we have
+%
+\begin{equation}
+\langle l^N wLSJM_J \mid H_{CEF} \mid l^N w^{\prime}L^{\prime}SJ^{\prime}M_J^{\prime} \rangle \propto
+\left \{
+\begin{array}{ccc}
+J & J^{\prime} & k \\
+L^{\prime} & L & S
+\end{array}
+\right \} \propto
+\delta_{L, k}
+\end{equation}
+%
+Thus, $L=k\geq 2$. The matrix element is zero because there is no term with $L>0$ and $S=7/2$ for the $f^7$ configuration. However, intermediate coupling may result in appearance of small CEF splitting due to admixture of states with $L>0$.
+
+For tetragonal symmetry (including $D_{4h}$ and $C_{4v}$) the non-vanishing terms for $f$-shells  are (Tab.~1.7 in \cite{Jacquier})
+%
+$$
+H_i = B_0^2 C_0^{(2)} + B_0^4 C_0^{(4)} + (C_{-4}^{(4)}+C_4^{(4)})\mathrm{Re}B_4^4 + B_0^6 C_0^{(6)} + (C_{-4}^{(6)}+C_4^{(6)}) \mathrm{Re}B_4^6
+$$
+%
+Old alternative form of CEF Hamiltonian is
+$$
+H_{CEF} = \sum_{k,q,i} \theta_k A_k^q \langle r^k\rangle (O_k^q)_i
+$$
+where $O_k^q$ are Stevens operators. The coefficients $\theta_k$ are functions of $J$: $\theta_2=\alpha_J$, $\theta_4=\beta_J$ and $\theta_6=\gamma_J$ (their values are given in \cite{Hutchings}). The relations between the parameters are \cite{Jacquier}
+%
+\begin{equation} \label{eq1}
+\begin{split}
+	B_0^2 = 2 A_2^0 \langle r^2\rangle & \qquad B_0^6 = 16 A_6^0 \langle r^6\rangle \\
+	B_2^2 = \frac{\sqrt{6}}{3} A_2^2 \langle r^2\rangle & \qquad B_2^6 = \frac{16 \sqrt{105}}{105} A_6^2 \langle r^6\rangle \\
+	B_0^4 = 8 A_4^0 \langle r^4\rangle & \qquad B_3^6 = -\frac{8 \sqrt{105}}{105} A_6^3 \langle r^6\rangle \\
+	B_2^4 = \frac{2\sqrt{10}}{5} A_4^2 \langle r^4\rangle & \qquad B_4^6 = \frac{8 \sqrt{14}}{21} A_6^4 \langle r^6\rangle \\
+	B_3^4 = -\frac{2\sqrt{35}}{35} A_4^3 \langle r^4\rangle & \qquad B_6^6 = \frac{16 \sqrt{231}}{231} A_6^6 \langle r^6\rangle \\
+	B_4^4 = \frac{4\sqrt{70}}{35} A_4^4 \langle r^4\rangle & \qquad \\
+\end{split}
+\end{equation}
+%
+To extract CEF parameters from (one-electron) DFT calculations, let us consider one-electron CEF matrix elements:
+%
+\begin{equation}
+\langle lm | H_{CEF} | lm^{\prime} \rangle =
+\sum_{k,q} B_q^k \langle lm | \mathbf{C}^{(k)} | lm^{\prime} \rangle = 
+\frac{1}{\Pi_l} \sum_{k,q} B_q^k C_{lm^{\prime} \, kq}^{lm} \langle l || \mathbf{C}^{(k)} || l \rangle = 
+\sum_{k,q} B_q^k C_{l 0 \, k 0}^{l 0} C_{lm^{\prime} \, kq}^{lm}
+\end{equation}
+%
+Consider the following ``vectors'' with components numbered by $mm^{\prime}$
+$$
+A_{mm^{\prime}}^{kq} = C_{l 0 \, k 0}^{l 0} C_{lm^{\prime} \, kq}^{lm} \,.
+$$
+Let us check that these ``vectors'' are orthogonal
+$$
+\vec{A}^{kq}\cdot \vec{A}^{k^{\prime}q^{\prime}} =
+\sum_{mm^{\prime}} A_{mm^{\prime}}^{kq} A_{mm^{\prime}}^{k^{\prime}q^{\prime}} = 
+C_{l 0 \, k 0}^{l 0} C_{l 0 \, k^{\prime} 0}^{l 0}
+\sum_{mm^{\prime}} C_{lm^{\prime} \, kq}^{lm} C_{lm^{\prime} \, k^{\prime}q^{\prime}}^{lm} =
+\left(C_{l 0 \, k 0}^{l 0}\right)^2 \frac{\Pi^2_l}{\Pi^2_k} \delta_{kq,k^{\prime}q^{\prime}}
+$$
+Hence, to determine CEF parameters from DFT-calculated one-electron matrix elements we use
+$$
+\vec{H}_{CEF}\cdot \vec{A}^{kq} = B_q^k \vec{A}^{kq}\cdot \vec{A}^{kq} = 
+B_q^k \left(C_{l 0 \, k 0}^{l 0}\right)^2 \frac{\Pi^2_l}{\Pi^2_k}
+$$
+%
+If we know the crystal-field potential, we may directly obtain parameters by expanding the potential in spherical harmonics as
+%
+$$
+B_q^k = \sqrt{\frac{2k+1}{4\pi}} \int V_{CEF}(\vec{r}) Y_k^{q*}(\theta,\phi) (R(r)/r)^2 d^3r
+$$
+where $R(r)$ is a radial wave function. Howeve, there is a problem of taking into accout hybridization.
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Zeeman effect (field along Z)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{ssec:Mag}
+%
+Let us consider an external magnetic field oriented along $z$ axis. Then
+%
+$$
+H_{mag}^z = -\vec{\mu} \cdot \vec{B} = B_z \mu_B (L^{(1)} + g_s S^{(1)}) = B_z \mu_B (J_0^{(1)} + (g_s-1)S_0^{(1)})
+$$
+where $g_s\approx 2.0023192$ is the anomalous gyromagnetic ratio. The matrix elements in LSJ coupling (in atomic units) is
+%
+\begin{multline}
+\frac{1}{B_z\mu_B} \langle wLSJM_J \mid H_{mag}^z \mid w^{\prime}L^{\prime}S^{\prime}J^{\prime}M_J^{\prime} \rangle =\\=
+M_J \delta_{wLSJM_J,w^{\prime}L^{\prime}S^{\prime}J^{\prime}M_J^{\prime}} +
+\frac{g_s-1}{\Pi_J} C_{J^{\prime}M_J^{\prime}\, 10}^{JM_J}
+\langle wLSJ || S_0^{(1)} || w^{\prime}L^{\prime}S^{\prime}J^{\prime} \rangle = \\ =
+M_J \delta_{wLSJM_J,w^{\prime}L^{\prime}S^{\prime}J^{\prime}M_J^{\prime}} +
+(g_s-1)\Pi_{J^{\prime}} C_{J^{\prime}M_J^{\prime}\, 10}^{JM_J}
+\delta_{wL, w^{\prime}L^{\prime}}
+(-1)^{L+S^{\prime}+J+1}
+\left \{
+\begin{array}{ccc}
+J & J^{\prime} & 1 \\
+S^{\prime} & S & L
+\end{array}
+\right \}
+\langle S || S_0^{(1)} || S^{\prime} \rangle =\\=
+M_J \delta_{wLSJM_J,w^{\prime}L^{\prime}S^{\prime}J^{\prime}M_J^{\prime}} + \\ +
+(g_s-1)\Pi_{J^{\prime}} C_{J^{\prime}M_J^{\prime}\, 10}^{JM_J}
+\delta_{wLS, w^{\prime}L^{\prime}S^{\prime}}
+(-1)^{L+S+J+1}
+\left \{
+\begin{array}{ccc}
+J & J^{\prime} & 1 \\
+S & S & L
+\end{array}
+\right \}
+\sqrt{S(S+1)(2S+1)}
+\end{multline}
+%
+This matrix element is diagonal in all quantum numbers except of J. For diagonal elements it can be evaluated analytically as
+%
+$$
+\frac{1}{B_z\mu_B} \langle wLSJM_J \mid H_{mag}^z \mid wLSJM_J \rangle =
+M_J g_J
+$$
+where
+$$
+g_J = 1 + (g_s-1)\frac{J(J+1)+S(S+1)-L(L+1)}{2J(J+1)}
+$$
+%
+is a Land\'e factor. In the particular case of $L=0$ we have $g_J=g_s$
+
+In the absence of CEF, for the ground state we have $M_J=-J$ and magnetic moment of atom is aligned along $Z$. Thus, for magnetic moment we have
+%
+\begin{equation}
+	\mu = -\frac{E}{B_z} = J g_J \mu_B
+\end{equation}
+%
+It is different from the effective magnetic moment, which appears in the expression for magnetic susceptibility (Getzlaf, 2.134)
+%
+\begin{equation}
+	\mu_{eff} = g_J \mu_B \sqrt{J(J+1)}
+\end{equation}
+%
+Let us calculate spin projection on the $z$ axis for the diagonal states:
+%
+\begin{multline}
+\langle wLSJM_J \mid S_z \mid wLSJM_J \rangle =
+\langle wLSJM_J \mid S_0^{(1)} \mid wLSJM_J \rangle =\\=
+\frac{J(J+1)+S(S+1)-L(L+1)}{2J(J+1)} M_J \approx (g_J - 1) M_J
+\end{multline}
+%
+Thus, the effective spin moment is proportional to the effective total moment as
+\begin{equation}
+S_{eff} \propto (g_J - 1) \sqrt{J(J+1)}
+\label{eq:Seff}
+\end{equation}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Zeeman effect (field in XY plane)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+The Hamiltonian is
+$$
+H_{mag} = -\vec{\mu} \cdot \vec{B} = \mu_B \sum_q B_q (J_q^{(1)} + (g_s-1)S_q^{(1)})
+$$
+%
+where (similarly to Eq.~\ref{eq:expansion})
+$$
+B_{\pm 1} = \frac{\mp B_x + i B_y}{\sqrt{2}}, \qquad B_0 = B_z, \qquad J_{\pm 1} = \frac{\mp 1}{\sqrt{2}} (J_x \pm i J_y)
+$$
+%
+For step-up and step-down operators $J_{\pm}$
+$$
+J_{\pm}\, |j,m_j\rangle = \sqrt{(j\mp m_j)(j \pm m_j + 1)}\, |j,m_j\pm 1\rangle =
+\sqrt{j(j+1)-m_j(m_j \pm 1)}\, |j,m_j\pm 1\rangle
+$$
+$$
+J_{\pm 1}\, |j,m_j\rangle = \frac{\mp 1}{\sqrt{2}} \sqrt{(j\mp m_j)(j \pm m_j + 1)}\, |j,m_j\pm 1\rangle
+$$
+%
+The nonzero $xy$ matrix elements in LSJ coupling are
+%
+\begin{multline}
+\frac{1}{B_{\pm 1}\mu_B} \langle wLSJM_J \mid H_{mag}^{\pm} \mid w^{\prime}L^{\prime}S^{\prime}J^{\prime}M_J^{\prime} \rangle =
+\frac{\mp 1}{\sqrt{2}}
+\sqrt{(J\mp M_J^{\prime})(J \pm M_J^{\prime} + 1)}\, \delta_{wLSJ,w^{\prime}L^{\prime}S^{\prime}J^{\prime}}
+\delta_{M_J,M_J^{\prime}\pm 1} + \\ +
+(g_s-1)\Pi_{J^{\prime}} C_{J^{\prime}M_J^{\prime}\, 1 \pm 1}^{JM_J}
+\delta_{wLS, w^{\prime}L^{\prime}S^{\prime}}
+(-1)^{L+S+J+1}
+\left \{
+\begin{array}{ccc}
+J & J^{\prime} & 1 \\
+S & S & L
+\end{array}
+\right \}
+\sqrt{S(S+1)(2S+1)}
+\end{multline}
+%
+Note that the second term differs from the $H_{mag}^z$ case only in Clebsch-Gordan coefficient. For elements diagonal in LSJ we obtain
+$$
+\frac{1}{B_{\pm 1}\mu_B} \langle wLSJM_J \mid H_{mag}^{\pm} \mid wLSJM_J^{\prime} \rangle = \mp \frac{g_J}{\sqrt{2}}
+\sqrt{(J\mp M_J^{\prime})(J \pm M_J^{\prime} + 1)} 
+$$
+For field along $x$ we get $B_{+1}=-B_x/\sqrt{2}$, $B_{-1}=B_x/\sqrt{2}$ and for elements diagonal in LSJ we obtain
+$$
+\frac{1}{B_x\mu_B} \langle wLSJM_J \mid H_{mag}^{x} \mid wLSJ M_J\pm 1 \rangle = \frac{g_J}{2}
+\sqrt{(J\mp M_J)(J \pm M_J + 1)} 
+$$
+%
+For intermediate coupling, we may write
+%
+\begin{equation}
+\langle l^N JM_J \mid H_{mag} \mid l^N J^{\prime}M_J^{\prime} \rangle = 
+\sum_{wLS} C^J_{wLS} C^{J^{\prime}}_{wLS}
+\langle l^N wLSJM_J \mid H_{mag} \mid l^N wLS J^{\prime}M_J^{\prime} \rangle
+\end{equation}
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Magnetic ordering (molecular field theory)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{ssec:MField}
+%
+{\bf Zero CEF.}
+
+In the absence of CEF, magnetic field splits the energy level $J$ in $2J+1$ sublevels. In this case photoemission cross section is given by summation over all $M_J$:
+$$
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = \sum_{M_J} u_{M_J} \frac{d \sigma_{J^{\prime} M_J}}{d \Omega} \,
+$$
+where $u_{M_J}$ is the occupation of the level $M_J$. In the absence of CEF, it is given by the Boltzmann distribution \cite{Getzlaff_2008}
+$$
+u_{M_J} = \frac{1}{Z} \exp \left(- y \frac{M_J}{J} \right) \,,
+$$
+%
+where (Eq.~2.97 in \cite{Getzlaff_2008})
+%
+$$
+y = \frac{J g_J \mu_B B(T)}{kT} = \frac{B}{B_S} \frac{J g_J \mu_B B_S}{kT} \,.
+$$
+From Eq.~5.14 or 5.16 \cite{Getzlaff_2008}, the saturation field is
+$$
+B_S = \frac{3kT_C^0}{(J+1) g_J \mu_B} \,.
+$$
+Thus,
+$$
+y = \frac{B}{B_S} \frac{3 J T_C^0}{(J+1) T} \,.
+$$
+The field (or magnetization) can be found from the Eq.~5.19 \cite{Getzlaff_2008}:
+$$
+\frac{B}{B_S} = B_J \left( \frac{3J}{J+1} \frac{B}{B_S} \frac{T_C^0}{T} \right),
+$$
+or
+\begin{equation}
+B_J(y) = y \frac{(J+1) T}{3 J T_C^0}
+\label{eq:BrilEq}
+\end{equation}
+Here, the Brillouin function is given by Eq.~2.109 \cite{Getzlaff_2008}
+$$
+B(y) = \frac{2J+1}{2J} \coth \left( \frac{2J+1}{2J} y \right)
+- \frac{1}{2J} \coth \left( \frac{y}{2J} \right)
+$$
+From Eq.~2.95 \cite{Getzlaff_2008}
+$$
+Z = \frac{\sinh\left(\frac{2J+1}{2J}y\right)}{\sinh\left(\frac{y}{2J}\right)}
+$$
+Energy difference between neighboring $M_J$ levels at saturation (T=0) can be estimated as
+$$
+\Delta E = \frac{y kT}{J} = \frac{3kT_C}{J+1}
+$$
+For $T_C=48$~K and $J=7/2$ (EuIr$_2$Si$_2$ case)  $\Delta E = 2.8$~meV.
+
+It is useful to calculate thermally averaged $J_Z$ moment
+$$
+\langle J_Z \rangle = \langle M_J \rangle =\sum_{M_J} M_J u_{M_J} = \frac{J}{Z} \frac{dZ}{dy} = \frac{1}{2} \left[ (2J+1) \coth\left(\frac{2J+1}{2J}y\right) 
+- \coth\left(\frac{y}{2J}\right)\right]
+$$
+and
+\begin{multline}
+\langle M^2_J \rangle = \frac{J^2}{Z} \frac{d^2Z}{dy^2} = J(J+1) - \frac{\coth\left(\frac{y}{2J}\right)}{2}
+\left((2J+1) \coth\left(\frac{2J+1}{2J}y\right) - \coth\left(\frac{y}{2J}\right)\right) = \\ =
+J(J+1) - \langle M_J \rangle \coth\left(\frac{y}{2J}\right)
+\label{eq:MJ2}
+\end{multline}
+%
+
+{\bf Nonzero CEF.}
+
+In the case of CEF-split states in presence of magnetic field, if we neglect mixing of different $J$, we have the wave function of the form
+$$
+|J\nu \rangle = \sum_{M_J} A^{\nu}_{M_J} |JM_J\rangle
+$$
+%
+Then, the thermally averaged $J_Z$ moment will be
+%
+\begin{equation}
+	\langle J_Z \rangle = \sum_{\nu} \langle J\nu | J_Z |J\nu \rangle u_{\nu} = 
+	\sum_{M_J} M_J \sum_{\nu} |A^{\nu}_{M_J}|^2 u_{\nu}
+	\label{eq:JzMoment}
+\end{equation}
+%
+The moments along $X$ and $Y$ will be 
+\begin{equation}
+	\langle J_{\pm 1} \rangle = \sum_{\nu} \langle J\nu | J_{\pm 1} |J\nu \rangle u_{\nu} = 
+	\mp \frac{1}{\sqrt{2}} \sum_{M_J} \sqrt{J(J+1)-M_J(M_J\pm 1)}  \sum_{\nu} A^{\nu *}_{M_J\pm 1} A^{\nu}_{M_J} u_{\nu}
+\end{equation}
+%
+\begin{equation}
+	\langle J_X \rangle = \frac{1}{\sqrt{2}} \sum_{\nu} \langle J\nu | J_{-1} - J_{+1} |J\nu \rangle u_{\nu} = 
+	\sum_{M_J,\pm} \frac{\sqrt{J(J+1)-M_J(M_J\pm 1)}}{2}  \sum_{\nu} A^{\nu *}_{M_J\pm 1} A^{\nu}_{M_J} u_{\nu}
+\end{equation}
+%
+\begin{equation}
+	\langle J_Y \rangle = \frac{1}{i\sqrt{2}} \sum_{\nu} \langle J\nu | J_{-1} + J_{+1} |J\nu \rangle u_{\nu} = 
+	\sum_{M_J,\pm} \mp \frac{\sqrt{J(J+1)-M_J(M_J\pm 1)}}{2}  \sum_{\nu} A^{\nu *}_{M_J\pm 1} A^{\nu}_{M_J} u_{\nu}
+\end{equation}
+%
+The averaged magnetic moment can be obtained as
+$$
+\langle \vec{\mu} \rangle = - g_{J} \mu_B \langle \vec{J} \rangle
+$$
+The magnetic field is
+$$
+\vec{B} = \lambda \vec{M} = \lambda n \langle \vec{\mu} \rangle
+$$
+where $n$ is the concentration and $\lambda$ is the molecular field constant, which is related to Curie (N\'eel) temperature $T_C^0$ in the absence of CEF as (5.15 in \cite{Getzlaff_2008})
+$$
+\lambda = \frac{3k T_C^0}{n \mu_{eff}^2}
+$$
+Hence, the magnetic field is
+$$
+\vec{B} = \frac{3k T_C^0}{\mu_{eff}^2} \langle \vec{\mu} \rangle =
+- \frac{3k T_C^0}{g_J \mu_B J(J+1)} \langle \vec{J} \rangle
+$$
+The effective Zeeman Hamiltonian can be written (supposing no mixing of different $J$)
+$$
+H_{mag} = - \vec{\mu} \cdot \vec{B} = -\frac{3k T_C^0}{J(J+1)} \vec{J}\cdot\langle \vec{J} \rangle
+$$
+Matrix elements of this Hamiltonian must be determined self-consistently. We start from a given $\langle \vec{J} \rangle$, find the eigenstates and calculate new $\langle \vec{J} \rangle$ from them. This procedure is repeated until convergence is reached.
+
+This type of Hamiltonian is able to describe a temperature-dependent canting of magnetic moments, which can be determined as \cite{Takano_JMMM_1987}
+$$
+\tan\theta = \frac{\langle J_X \rangle}{\langle J_Z \rangle}
+$$
+%
+The value of $T_C^0$ can be roughly estimated using a so-called de Gennes scaling for compounds that differ only by the type of rare-earth atom \cite{Kliemt_CRT_2020}
+$$
+T_C^0 = (g_J-1)^2 J(J+1) \frac{T_C^{Gd}}{J_{Gd}(J_{Gd}+1)} \,,
+$$
+where $T_C^{Gd}$ is a Curie temperature of Gd compound (no CEF).
+This relation comes from Eq.~\ref{eq:Seff} and from the fact that the exchange interaction is proportional to the spin moments of interacting atoms (not to their magnetic moments).
+%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection {Photoemission}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Note: there is a contradiction that we do not use intermediate coupling for CEF/Zeeman calculations, but use for electrostatic/SO and photoemission calculation!!!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Photoemission matrix element for determinantal basis states}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+The final state is an antisymmetrized and normalized product of the states of ion and photoelectron:
+$$
+| f \rangle = \{\chi_s, k_1^{\prime}, k_2^{\prime}, \ldots k_{N-1}^{\prime} \} \,.
+$$
+%
+The initial state is
+%
+$$
+| i \rangle = \{k_1, k_2, \ldots k_{N} \} \,.
+$$
+%
+The dipole transition operator is an F-type operator
+$$
+D = \sum_i \vec{\varepsilon} \cdot \vec{r}_i
+$$
+%
+The matrix element for an F-type operator is (see \cite{Judd}, p.~17)
+%
+\begin{multline}
+\langle f \mid D \mid i \rangle =
+\langle \{\chi_s, k_1^{\prime}, k_2^{\prime}, \ldots k_{N-1}^{\prime} \} \mid D \mid \{k_1, k_2, \ldots k_n \ldots k_{N} \} \rangle = \\
+= (-1)^{n-1} \langle \{\chi_s, k_1^{\prime}, k_2^{\prime}, \ldots k_{N-1}^{\prime} \} \mid D \mid \{k_n, k_1, k_2, \ldots k_{N-1} \} \rangle = \\
+= (-1)^{n-1}
+\delta_{\{k_1^{\prime}, k_2^{\prime}, \ldots k_{N-1}^{\prime}\}, \{k_1, k_2, \ldots k_{N-1} \}}
+\langle \chi_s \mid \vec{\varepsilon} \cdot \vec{r} \mid k_{n} \rangle
+\end{multline}
+%
+where $(n-1)$ is a number of permutations needed to place the function $k_n$, which is absent in the final state, to the first position.
+
+In general, eigenfunctions of the Hamiltonian are linear combinations of the basis states $|b\rangle$
+$$
+|f^q\rangle = \sum_b C_b |b\rangle \,, \qquad |f^{q-1}\rangle = \sum_{b^{\prime}} C_{b^{\prime}} |b^{\prime}\rangle \,,
+$$
+where the coefficients $C_b$ can be calculated, e.g. with the LANTHANIDE program \cite{Lanthanide_2001}.
+Then the photoemission matrix element is
+\begin{equation}
+\langle f \mid D \mid i \rangle = 
+\sum_{b b^{\prime}}   C_{b^{\prime}}^*  C_b \,
+\langle \{ \chi, b^{\prime} \} \mid D \mid b \rangle
+\end{equation}
+Thus, matrix element calculation is very simple in this basis. The main disadvantage is a large number of basis states.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Photoemission intensity for LSJ states}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+The state of atom polarized by magnetic field in the LSJ coupling scheme is
+described by the magnetic quantum number $M_J$.
+Consider the the transformation of the wave functions from LS- to LSJ- coupling \cite{Cox_1975}.
+In the LSJ coupling scheme, the initial state is
+$$
+| i \rangle = |wLSJM_J \rangle_{l^q} = \sum_{M M_S} C^{J M_J}_{L M, S M_S} |w LS M M_S \rangle_{l^q}
+$$
+The $|wLS M M_S \rangle_{l^q}$ state can be expressed as a combination of states produced by adding one electron to one of the possible ionized states $|L^{\prime} S^{\prime} \rangle_{l^{q-1}}$:
+$$
+|w LS M M_S \rangle_{l^q} = \sum_{w^{\prime}L^{\prime} S^{\prime}}  Q(wLS,w^{\prime}L^{\prime}S^{\prime})
+| (w^{\prime}L^{\prime} S^{\prime}) wLS M M_S \rangle
+$$
+where $Q$ are coefficients of fractional parentage.
+Addition of one electron to the ion is described by
+$$
+| (w^{\prime}L^{\prime} S^{\prime}) wLS M M_S \rangle = \sum_{M^{\prime} M_S^{\prime} m m_s} 
+C^{SM_S}_{S^{\prime}M_S^{\prime}, \frac{1}{2}m_s} C^{LM}_{L^{\prime} M^{\prime}, lm}
+| w^{\prime}L^{\prime} S^{\prime} M^{\prime} M_S^{\prime} \rangle_{l^{q-1}}
+| lm m_s \rangle
+$$
+The final state is an antisymmetrized product of the states of ion and photoelectron:
+$$
+| f \rangle = \hat A \, |(w^{\prime}L^{\prime} S^{\prime} J^{\prime} M_J^{\prime}) \,  \chi \rangle
+$$
+Antisymmetrization can be removed from the matrix element because the matrix element is the same for any electron occupying the continuum state $\chi$
+$$
+\langle f \mid \vec{\varepsilon} \cdot \vec{r}  \mid i \rangle = \sqrt{q} \,
+\langle (w^{\prime}L^{\prime} S^{\prime} J^{\prime} M_J^{\prime}) \,  \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid i \rangle
+$$
+Writing
+$$
+|w^{\prime} L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} \rangle_{l^{q-1}} =
+\sum_{M^{\prime} M_S^{\prime}} C^{J^{\prime}M_J^{\prime}}_{L^{\prime} M^{\prime}, S^{\prime} M_S^{\prime}} | w^{\prime}L^{\prime} S^{\prime} M^{\prime} M_S^{\prime} \rangle_{l^{q-1}} 
+$$
+and taking into account that the ionized states are orthogonal, we obtain for the matrix element
+%
+\begin{equation}
+\langle f \mid \vec{\varepsilon} \cdot \vec{r}  \mid i \rangle = \sqrt{q} \,
+Q(wLS,w^{\prime}L^{\prime}S^{\prime}) \, \sum_{m,m_s} 
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \,
+\langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle \,.
+\label{eq:me1}
+\end{equation}
+%
+The transformation matrix $U$ is given by
+%
+$$
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) =
+\sum_{M, M^{\prime},M_S,M_S^{\prime}}
+C^{LM}_{L^{\prime} M^{\prime}, lm} \,
+C^{SM_S}_{S^{\prime}M_S^{\prime}, \frac{1}{2}m_s} \, C^{J M_J}_{L M, S M_S} \,
+C^{J^{\prime}M_J^{\prime}}_{L^{\prime} M^{\prime}, S^{\prime} M_S^{\prime}} \,
+$$
+%
+%
+The sum of the product of the four Clebsch-Gordan coefficients is given by
+(Eq.~8.7.20, \cite{Varshalovich})
+%
+\begin{multline}
+\sum_{\beta \gamma \varepsilon \varphi} C^{a\alpha}_{b\beta \, c\gamma} \,
+C^{d \delta}_{e\varepsilon \, f\varphi} \, C^{g \eta}_{e\varepsilon \,b \beta} \,
+C^{j \mu}_{f\varphi \, c \gamma} = \\ =
+(-1)^{a-b+c+d+e-f} \sum_{k \varkappa}
+\Pi_{kkag} \, C^{j \mu}_{a\alpha \, k\varkappa} \, C^{d \delta}_{g\eta \, k\varkappa}
+\left \{
+\begin{array}{ccc}
+b & c & a \\
+j & k & f
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+b & e & g \\
+d & k & f
+\end{array}
+\right \}
+%
+= \\ =
+%
+\Pi_{adgj} \sum_{k \varkappa}
+C^{k \varkappa}_{g \eta \, j \mu} \, C^{k \varkappa}_{d \delta \, a \alpha}
+\left \{
+\begin{array}{ccc}
+c & b & a \\
+f & e & d \\
+j & g & k
+\end{array}
+\right \}
+\end{multline}
+%
+Let
+$$
+a\alpha=JM_J,\,\, b\beta=LM, \,\, c\gamma = S M_S,
+\,\, e\varepsilon=L^{\prime} M^{\prime}, \,\,
+f \varphi=S^{\prime} M_S^{\prime}, \,\,
+g\eta=lm , \,\, j\mu=\frac{1}{2} m_s, \,\, d \delta=J^{\prime} M_J^{\prime}.
+$$
+%
+Then,
+%
+\begin{equation}
+\hspace{-12mm}
+\begin{array}{l} \displaystyle
+\sum_{M, M_S,M^{\prime}, M_S^{\prime}} C^{JM_J}_{LM \, S M_S} \,
+C^{J^{\prime}M^{\prime}}_{L^{\prime} \,M^{\prime} \, S^{\prime} M_S^{\prime}} \,
+C^{lm}_{L^{\prime} \,M^{\prime} \, LM} \,
+C^{\frac{1}{2} m_s}_{ S^{\prime} M_S^{\prime}  \, S M_S} = \displaystyle
+(-1)^{J-L+S+J^{\prime}+L^{\prime}-S^{\prime}}
+%
+\\[6mm] \times \displaystyle
+%
+\sum_{k \varkappa}
+\Pi_{kkJl} \, C^{\frac{1}{2} m_s}_{J M_J \, k\varkappa} \,
+C^{J^{\prime} M_J^{\prime}}_{lm \, k\varkappa}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \}
+%
+\end{array}
+\end{equation}
+%
+We use the following relations (Eq.~8.4.10, \cite{Varshalovich}):
+$$
+\begin{array}{l} \displaystyle
+C^{lm}_{L^{\prime} \,M^{\prime} \, LM} = (-1)^{L^{\prime}-M^{\prime}}
+\frac{\Pi_{l}}{\Pi_L} \, C^{L-M}_{L^{\prime} \,M^{\prime} \, l-m}=
+(-1)^{L-M^{\prime}-l}
+\frac{\Pi_{l}}{\Pi_L} \, C^{LM}_{L^{\prime} \,-M^{\prime} \, lm}
+%
+\\[6mm] \displaystyle
+%
+C^{\frac{1}{2} m_s}_{ S^{\prime} M_S^{\prime}  \, S M_S}=
+(-1)^{ S^{\prime}-M_S^{\prime}} \frac{\Pi_{\frac{1}{2}}}{\Pi_S} \,
+C^{S -M_S}_{ S^{\prime} M_S^{\prime}  \,\frac{1}{2} -m_s }=
+(-1)^{ S-M_S^{\prime}-1/2} \frac{\Pi_{\frac{1}{2}}}{\Pi_S} \,
+C^{S M_S}_{ S^{\prime} -M_S^{\prime}  \,\frac{1}{2} m_s }
+%
+\\[6mm] \displaystyle
+%
+C^{J^{\prime}M_J^{\prime}}_{L^{\prime} \,M^{\prime} \,
+S^{\prime} M_S^{\prime}} = (-1)^{L^{\prime}+S^{\prime}-J^{\prime}} 
+C^{J^{\prime} -M_J^{\prime}}_{L^{\prime} \, -M^{\prime} \,
+S^{\prime} -M_S^{\prime}}
+\end{array}
+$$
+%
+Then
+%
+\begin{equation}
+\hspace{-12mm}
+\begin{array}{l} \displaystyle
+\frac{\Pi_{\frac{1}{2} l}}{\Pi_{SL}} 
+\sum_{M, M_S,M^{\prime}, M_S^{\prime}}
+(-1)^{L-M^{\prime}-l+ S-M_S^{\prime}-1/2+L^{\prime}+S^{\prime}-J^{\prime}} 
+C^{LM}_{L^{\prime} \, -M^{\prime} \, lm} \,
+C^{S M_S}_{ S^{\prime} -M_S^{\prime}  \,\frac{1}{2} m_s } \,
+C^{JM_J}_{LM \, S M_S} \,
+C^{J^{\prime} -M_J^{\prime}}_{L^{\prime} \,-M^{\prime} \,
+S^{\prime} -M_S^{\prime}} \,
+%
+\\[6mm] = \displaystyle
+%
+(-1)^{J-L+S+J^{\prime}+L^{\prime}-S^{\prime}}
+\sum_{k \varkappa}
+\Pi_{kkJl} \, C^{\frac{1}{2} m_s}_{J M_J \, k\varkappa} \,
+C^{J^{\prime} M_J^{\prime}}_{lm \, k\varkappa}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \}
+%
+\end{array}
+\end{equation}
+%
+Taking into account that $M^{\prime}+M_S^{\prime}=M_J^{\prime}$, and using following replacement of variables
+$$
+M^{\prime} \to -M^{\prime} \,, \qquad M_S^{\prime} \to -M_S^{\prime} \,,
+\qquad M_J^{\prime} \to -M_J^{\prime}
+$$
+we obtain
+%
+\begin{equation}
+\hspace{-12mm}
+\begin{array}{l} \displaystyle
+\frac{\Pi_{\frac{1}{2} l}}{\Pi_{SL}} 
+\sum_{M, M_S,M^{\prime}, M_S^{\prime}}
+C^{LM}_{L^{\prime} \, M^{\prime} \, lm} \,
+C^{S M_S}_{ S^{\prime} M_S^{\prime}  \,\frac{1}{2} m_s } \,
+C^{JM_J}_{LM \, S M_S} \,
+C^{J^{\prime} M_J^{\prime}}_{L^{\prime} \,M^{\prime} \,
+S^{\prime} M_S^{\prime}} \,
+%
+\\[7mm] = \displaystyle
+%
+(-1)^{J+l+1/2-M_J^{\prime}}
+\sum_{k \varkappa}
+\Pi_{kkJl} \, C^{\frac{1}{2} m_s}_{J M_J \, k\varkappa} \,
+C^{J^{\prime} -M_J^{\prime}}_{lm \, k\varkappa}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \} \,.
+%
+\end{array}
+\end{equation}
+%
+Then
+%
+\begin{equation}
+U =
+%
+(-1)^{J+l+1/2-M_J^{\prime}}
+\sum_{k \varkappa}
+\frac{\Pi_{kkLSJ}}{\Pi_{\frac{1}{2}}} \,
+C^{\frac{1}{2} m_s}_{J M_J \, k\varkappa} \,
+C^{J^{\prime} -M_J^{\prime}}_{lm \, k\varkappa}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \} \,.
+\label{Ufin}
+\end{equation}
+%
+or
+%
+\begin{equation}
+U = (-1)^{J-M_J+J^{\prime}-M_J^{\prime}+l+m} \, \Pi_{JJ^{\prime}LS}
+\sum_{k \varkappa}
+C^{k\varkappa}_{J -M_J \, \frac{1}{2} m_s} \,
+C^{k\varkappa}_{l -m \, J^{\prime} -M_J^{\prime}}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \} \,.
+\label{Ufin1}
+\end{equation}
+%
+For $U^2$ we have
+\begin{equation}
+U^2 = \left[
+\sum_{k \varkappa}
+\Pi_{kkLS} \,
+C^{J M_J}_{\frac{1}{2} m_s \, k\varkappa} \,
+C^{J^{\prime} -M_J^{\prime}}_{lm \, k-\varkappa}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \}
+\right]^2 \,.
+\label{U2}
+\end{equation}
+%
+Alternatively,
+\begin{multline}
+U =
+%
+(-1)^{L+S-l-1/2+L^{\prime}+S^{\prime}-J^{\prime}+M_J^{\prime}}
+\Pi_{JJ^{\prime}LS}
+\sum_{k \varkappa}
+C^{k\varkappa}_{lm \, \frac{1}{2}m_s} \,
+C^{k\varkappa}_{J^{\prime} -M_J^{\prime} \, J M_J}
+\left \{
+\begin{array}{ccc}
+S & L & J \\
+S^{\prime} & L^{\prime} & J^{\prime} \\
+\frac{1}{2} & l & k
+\end{array}
+\right \} = \\ =
+%
+\Pi_{JJ^{\prime}LS}
+\sum_{k \varkappa}
+(-1)^{J+1+k +M_J^{\prime}}
+C^{k\varkappa}_{lm \, \frac{1}{2}m_s} \,
+C^{k\varkappa}_{J^{\prime} -M_J^{\prime} \, J M_J}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+L^{\prime} & S^{\prime} & J^{\prime} \\
+l & \frac{1}{2} & k
+\end{array}
+\right \} \,,
+\label{Ufin2}
+\end{multline}
+%
+where, $k=l\pm\frac{1}{2}$ and $m+m_s=\varkappa=M_J-M_J^\prime$.
+
+Assuming conservation of $m_s$ upon photoemission, the cross section is
+\begin{equation}
+\frac{d \sigma_{M_J J^{\prime} M_J^{\prime}}}{d \Omega} = q Q^2
+\sum_{m_s} \left| \sum_m U(LSJM_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) 
+\langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lm \rangle \right|^2 \,,
+\end{equation}
+The inner sum contains \textbf{only one term} with $m=M_J-M_J^\prime-m_s$, therefore we can write
+\begin{equation}
+\frac{d \sigma_{M_J J^{\prime} M_J^{\prime}}}{d \Omega} = q Q^2
+\sum_{m m_s} U^2(LSJM_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \frac{d \sigma_{m}}{d \Omega} \,.
+\label{sigmaMagn}
+\end{equation}
+
+To calculate photoemission intensity, the matrix element must be squared, summed over $M_J^\prime$ and averaged over $M_J$.
+
+For nonmagnetic case we obtain. 
+$$
+\frac{d \sigma_{w^{\prime}J^{\prime}}}{d \Omega} = \frac{q Q^2}{\Pi^2_{J}}
+\sum_{m m_s M_J M_J^\prime} U^2(LSJM_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \frac{d \sigma_{m}}{d \Omega} \,.
+$$
+Let $W(k)$ be the $9j$ symbol and $k_{\pm}=l\pm 1/2$. Then
+$$
+\frac{d \sigma_{w^{\prime}J^{\prime}}}{d \Omega} = \frac{qQ^2}{\Pi^2_{J}}
+\sum_{m m_s M_J M_J^\prime} \left( \sum_{\varkappa} C^{k_+ \varkappa}_{lm \, \frac{1}{2}m_s} \,
+C^{k_+ \varkappa}_{J^{\prime} M_J^{\prime} \, J M_J} W(k_+) +
+\sum_{\varkappa^\prime} C^{k_- \varkappa^\prime}_{lm \, \frac{1}{2}m_s} \,
+C^{k_- \varkappa^\prime}_{J^{\prime} M_J^{\prime} \, J M_J} W(k_-) \right)^2 \frac{d \sigma_m}{d \Omega} \,.
+$$
+
+Taking into account Eq.~8.7.4 and 8.7.5 (p.~219 in \cite{Varshalovich}), for the terms in the sum we have
+$$
+\sum_{M_J M_J^\prime} 
+ C^{k_+ \varkappa}_{J^{\prime} M_J^{\prime} \, J M_J}
+ C^{k_- \varkappa^{\prime}}_{J^{\prime} M_J^{\prime} \, J M_J} = 0 \,
+$$
+and
+$$
+\sum_{m m_s M_J M_J^\prime} \left( \sum_{\varkappa} C^{k\varkappa}_{J^{\prime} M_J^{\prime} \, J M_J} C^{k\varkappa}_{lm \, \frac{1}{2}m_s} \right)^2 \frac{d \sigma_{m}}{d \Omega} 
+= \sum_m \frac{d \sigma_{m}}{d \Omega} \sum_{\varkappa\, m_s} \left( C^{k\varkappa}_{lm \, \frac{1}{2}m_s} \right)^2 =
+\frac{\Pi_{kk}}{\Pi_{ll}} \sum_m \frac{d \sigma_{m}}{d \Omega} = \Pi_{kk} \frac{d \sigma^{(one)}}{d \Omega} \,.
+$$
+Thus, we get
+\begin{equation}
+\frac{d \sigma_{w^{\prime}J^{\prime}}}{d \Omega} = q Q^2(wLS,w^{\prime}L^{\prime}S^{\prime}) \, \frac{d \sigma^{(one)}}{d \Omega} \,
+\Pi^2_{J^{\prime}LS} \sum_{k=l\pm\frac{1}{2}} \Pi^2_{k}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+L^{\prime} & S^{\prime} & J^{\prime} \\
+l & \frac{1}{2} & k
+\end{array}
+\right \}^2 \,.
+\label{sigmaNonmagn}
+\end{equation}
+%
+This formula can be found in Ref.~\cite{Cox_1975}. It is valid for transitions between the states with given $wLS$.
+Alternatively,
+%
+\begin{equation}
+\frac{d \sigma_{w^{\prime}J^{\prime}}}{d \Omega} = q Q^2(wLS, w^{\prime}S^{\prime}L^{\prime}) \,
+\frac{d \sigma^{(one)}}{d \Omega}
+\sum_{k=J\pm\frac{1}{2}} \left[ \Pi_{kJ^{\prime}LS} \,
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \}
+\right]^2 
+\,
+\end{equation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {A special case of L=0}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+For $L=0$ 6j-symbols are given by
+$$
+\left \{
+\begin{array}{ccc}
+0 & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \} = \delta_{S,J} \, \delta_{k,S^{\prime}} \,
+\frac{(-1)^{k+S+1/2}}{\Pi_{kS}}
+\,, \qquad
+\left \{
+\begin{array}{ccc}
+0 & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \} =  \delta_{l,L^{\prime}} \, \delta_{k,S^{\prime}} \,
+\frac{(-1)^{k+L^{\prime}+J^{\prime}}}{\Pi_{kL^{\prime}}} \,.
+$$
+%
+Then, using $\varkappa=-M_S^{\prime}$,
+%
+\begin{equation}
+\begin{array}{lll}
+U(L=0 \, S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s)
+&=& \displaystyle
+(-1)^{2J+1-M_J^{\prime}+J^{\prime}+2S^{\prime}} \sum_{M_S^\prime}\, 
+\frac{\Pi_{J}}{\Pi_{\frac{1}{2}l}} \,
+C^{\frac{1}{2} m_s}_{J M_J \,
+S^{\prime} -M_S^{\prime}} \,
+C^{J^{\prime} -M_J^{\prime}}_{lm \, S^{\prime} -M_S^{\prime}}
+%
+\end{array}
+\end{equation}
+where $M_S^{\prime}=M_J-m_s=M_J^{\prime}+m$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {A closed shell}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+We have initial state term $^1S_0$ and final state with $J^{\prime}~=~l\pm\frac{1}{2}$. Thus,
+$$
+L=0,\, J=0,\, S=0,\, M_J=0,\, L^{\prime}=l,\, S^{\prime}=\frac{1}{2}.
+$$
+Also, $M_S^{\prime}=-m_s=M_J^{\prime}+m$, and we get
+\begin{equation}
+U = \frac{(-1)^{J^\prime -M_J^\prime}}{\Pi_{\frac{1}{2} l}} C^{J^\prime -M_J^\prime}_{lm\,\frac{1}{2} m_s} = 
+\frac{(-1)^{J^\prime + m+m_s}}{\Pi_{\frac{1}{2} l}} C^{J^\prime (m+m_s)}_{lm\,\frac{1}{2} m_s}
+\label{eq:Uclosed}
+\end{equation}
+Taking into account that $Q=1$ and that $m_s$ should be equal to the that of photoelectron, we obtain
+$$
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = \frac{q}{2(2l+1)}\sum_{m, m_s}
+\left(C^{J^\prime (m+m_s)}_{lm\,\frac{1}{2} m_s} \right)^2 \frac{d \sigma_{m}}{d \Omega}
+$$
+In particular, for $J^\prime=l+\frac{1}{2}$ we obtain $C^2=\frac{l+1 \pm m}{2l+1}$ for $m_s=\pm\frac{1}{2}$.
+For $J^\prime=l-\frac{1}{2}$ we obtain $C^2=\frac{l \mp m}{2l+1}$ for $m_s=\pm\frac{1}{2}$ (Eq.~3, p.~210). Hence,
+$$
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = q \frac{J^\prime + 1/2}{(2l+1)^2}\sum_{m}
+\frac{d \sigma_{m}}{d \Omega} = 2\frac{J^\prime + 1/2}{2l+1}\sum_{m}
+\frac{d \sigma_{m}}{d \Omega}
+$$
+As one could expect, the total cross section is
+$$
+\frac{d \sigma_{nl}}{d \Omega} = 2\sum_{m} \frac{d \sigma_{m}}{d \Omega}.
+$$
+Thus, in the case of a closed shell, the cross section is a sum of one-electron cross sections.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Example of Eu$^{2+}$ in magnetic field along $Z$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Consider the initial configuration $f^7$ and initial term $^8S_{7/2}$
+and final term $^7F_{J^{\prime}}$, where \\
+$J^{\prime}~=~0,1,2,3,4,5,6$.
+Only $m_s=-\frac{1}{2}$ is allowed (because $M_S^{\prime}=M_J-m_s$). Then
+%
+$$
+l=3 \,, \quad q=7 \,, \quad L=0 \,, \quad S=7/2 \,, \quad J=7/2 \,, \quad
+M_J=-7/2 \,, \quad L^{\prime}=3 \,, \quad S^{\prime}=3, \, \quad M_S^{\prime}=-3.
+$$
+In this case for ``coefficient of fractional parentage'' we obtain
+$$
+Q(S^{\prime}, S^{\prime}) =1
+$$
+%
+and, using $M_S^{\prime}=M_J^{\prime}+m$, we get
+$$
+U= (-1)^{J^{\prime}-M_J^{\prime}} \frac{\Pi_{7/2}}{\Pi_{\frac{1}{2}3}} \,
+C^{\frac{1}{2} -\frac{1}{2}}_{\frac{7}{2} -\frac{7}{2} \, 3 3} \,
+C^{J^{\prime} (m+3)}_{3 m \, 33} \, .
+$$
+Using
+$$
+ C^{\frac{1}{2} -\frac{1}{2}}_{\frac{7}{2} -\frac{7}{2} \, 3 3} = \frac{1}{2}
+$$
+we obtain
+$$
+U= (-1)^{J^{\prime}-M_J^{\prime}} \frac{1}{\sqrt{7}} C^{J^{\prime} (m+3)}_{3 m \, 33} \,
+$$
+and 
+$$
+(q U)^2= \left( C^{J^{\prime} (3+m)}_{3 m \, 33} \right)^2 \,.
+$$
+Then, the squared expression must be summed over all components $M_J^{\prime}$ of the final state (related to $m$). The photoemission intensity is 
+%
+$$
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = \sum_{m}
+\left( C^{J^{\prime} (3+m)}_{3 m \, 33} \right)^2 \frac{d \sigma_{m}}{d \Omega}
+$$
+%
+General expression for any $M_J$ is
+$$
+\frac{d \sigma_{M_J J^{\prime}}}{d \Omega} = \sum_{m m_s (M_J^\prime M_S^\prime)} \frac{d \sigma_{m}}{d \Omega} \left(
+C_{\frac{1}{2} m_s\, S^\prime M_S^\prime}^{J M_J} 
+C_{l m\, S^\prime -M_S^\prime}^{J^\prime M_J^\prime}
+\right)^2
+$$
+%
+The total intensity of the multiplet is given by summation over $J^{\prime}(M_J^\prime)$ (using Eq.~8.8, p.202 in \cite{Varshalovich}):
+%
+$$
+\frac{d \sigma_{M_J}}{d \Omega} = \sum_{m m_s (M_S^\prime)} \frac{d \sigma_{m}}{d \Omega} \left(
+C_{\frac{1}{2} m_s\, S^\prime M_S^\prime}^{J M_J} \right)^2 = 
+\sum_{m} \frac{d \sigma_{m}}{d \Omega}
+$$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Rotation of magnetization direction (quantization axis)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+In the case of zero CEF, we can avoid the Zeeman term in the Hamiltonian and use the Brillouin function to describe magnetization. In this case the direction of magnetic field can be taken into account in the following way.
+
+The one-electron cross section is given by
+\begin{equation}
+\frac{d \sigma_m}{d \Omega} \propto
+| \langle \chi \mid \vec{\varepsilon} \cdot \vec{r} \mid lm \rangle |^2 \,,
+\end{equation}
+where $|\chi\rangle$ is the continuum final state of the photoelectron and the quantum number $m$ describes the orbital momentum projection on the magnetization direction. Thus, the cross section depends on the photon polarization and magnetization direction. For calculation of one-electron photoemission matrix elements, one can use the EDAC code \cite{Fadley_PRB_2001}, where the quantization axis is fixed along the $Z$ axis, which is along the surface normal. To rotate the quantization axis to the desired direction, one can use the complex conjugate of the Wigner D-matrix $D^*(\alpha,\beta,\gamma)$:
+\begin{equation}
+\langle \chi \mid \vec{\varepsilon} \cdot \vec{r} \mid lm \rangle = \sum_{m^{\prime}} D^{l\,*}_{m m^{\prime}}(\alpha,\beta,\gamma) \langle \chi \mid \vec{\varepsilon} \cdot \vec{r} \mid lm^{\prime} \rangle \,,
+\end{equation}
+where $(\alpha,\beta,\gamma)$ is a set of Euler angles, describing the axis rotation. The matrix elements in the right part can be directly calculated with EDAC.
+
+The D-matrix is given by
+$$
+D^j_{m m^{\prime}}(\alpha,\beta,\gamma) \equiv
+{\rm e}^{-i m \alpha} d^j_{m m^{\prime}}(\beta) {\rm e}^{-i m^{\prime} \gamma}
+$$
+where $d^j_{m m^{\prime}}(\beta)$ is a small d-matrix (Eq.~4.3.5 in \cite{Varshalovich})
+\begin{multline}
+d^j_{m m^{\prime}}(\beta) = 
+\left[ (j+m^{\prime})! (j-m^{\prime})! (j+m)! (j-m)!\right]^{\frac{1}{2}} \\
+\times \sum_s \left[ 
+\frac{(-1)^{m-m^{\prime}+s}\left(\cos\frac{\beta}{2}\right)^{2j+m^{\prime}-m-2s}\left(\sin\frac{\beta}{2}\right)^{m-m^{\prime}+2s}}{(j+m^{\prime}-s)! s! (m-m^{\prime}+s)! (j-m-s)!} \right]
+\end{multline} 
+The sum over $s$ is over such values that the factorials are nonnegative. For the Euler angles, z-x-z convention is used.
+
+An example of this approach is given in \cite{Usachov_PED_PRB_2020}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Example of Eu$^{3+}$}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Consider the initial configuration $f^6$ and initial term $^7F_0$
+and final term $^6L^{\prime}_{J^{\prime}}$, where $L^{\prime}~=~3,\,5$ and
+$J^{\prime}~=~\frac{5}{2},\,\frac{7}{2}$.
+Then
+%
+$$
+l=3 \,, \quad q=6 \,, \quad L=3 \,, \quad S=3 \,, \quad J=0 \,, \quad
+M_J=0 \,, \quad S^{\prime}=\frac{5}{2}.
+$$
+%
+Due to Clebsch-Gordan coefficients in Eq.~\ref{Ufin}, we have
+$$
+k=\frac{1}{2}\,, \quad \varkappa=m_s\,, \quad m+m_s=-M_J^{\prime}\,.
+$$
+%
+Then
+%
+\begin{equation}
+U=
+(-1)^{m+m_s-\frac{1}{2}}
+\Pi_{3} \,
+C^{J^{\prime} (m+m_s)}_{lm \, \frac{1}{2} m_s}
+\left \{
+\begin{array}{ccc}
+3 & L^{\prime} & 3 \\
+J^{\prime} & \frac{1}{2} & \frac{5}{2}
+\end{array}
+\right \} \,.
+\end{equation}
+Similarly to the case of closed shell, we obtain
+$$
+\frac{d \sigma_{L^{\prime}J^{\prime}}}{d \Omega} = q Q_{L^{\prime}}  (J^\prime + 1/2)
+\left \{
+\begin{array}{ccc}
+3 & L^{\prime} & 3 \\
+J^{\prime} & \frac{1}{2} & \frac{5}{2}
+\end{array}
+\right \}
+\sum_{m}
+\frac{d \sigma_{m}}{d \Omega} \,.
+$$
+%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Intermediate coupling}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+Spin-orbit interaction leads to mixing of states with different $LS$ and same $J$, which results in deviation from the LS coupling scheme. Therefore, we use an intermediate coupling when the state is considered as a combination of basis states obtained in well-defined coupling scheme (in our case LS coupling):
+$$
+| JM_J \rangle \, = \, \sum_{wLS} C^J_{wLS} \, | wLSJM_J \rangle
+$$
+%
+Then for the matrix element we obtain
+%
+\begin{equation}
+\langle f \mid \vec{\varepsilon} \cdot \vec{r}  \mid i \rangle = \sqrt{q}  
+\sum_{m,m_s} \sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}} Q(wLS,w^{\prime}L^{\prime} S^{\prime}) \, 
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \,
+\langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle \,.
+\end{equation}
+%
+Similarly to Eq.~\ref{sigmaMagn}, we obtain for the cross section
+\begin{equation}
+\frac{d \sigma_{M_J J^{\prime}M_J^{\prime}}}{d \Omega} = q \sum_{mm_s} \frac{d \sigma_m}{d \Omega}
+\left[ \sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}} Q(wLS,w^{\prime}L^{\prime} S^{\prime}) \, 
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \right]^2 \,.
+\end{equation}
+%
+For nonmagnetic case the photoemission intensity is 
+\begin{equation}
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = q \, \frac{d \sigma^{(one)}}{d \Omega} \,
+\sum_{k=l\pm\frac{1}{2}} \left[ \Pi_{kJ^{\prime}}
+\sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}} \Pi_{LS}
+ C^{J}_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}} \,
+Q(wLS, w^{\prime}S^{\prime}L^{\prime}) 
+\left \{
+\begin{array}{ccc}
+l & \frac{1}{2} & k \\[2mm]
+L & S & J \\[2mm]
+L^{\prime} & S^{\prime} & J^{\prime}
+\end{array}
+\right \} \right]^2 
+\,
+\end{equation}
+%
+or
+%
+\begin{equation}
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = q \, \frac{d \sigma^{(one)}}{d \Omega}
+\sum_{k=J\pm\frac{1}{2}} \left[ \Pi_{kJ^{\prime}}
+\sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}} \Pi_{LS}
+ C^{J}_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}} \,
+Q(wLS, w^{\prime}S^{\prime}L^{\prime}) 
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \}
+\right]^2 
+\,
+\end{equation}
+%
+%
+For magnetic case from Eq.~\ref{Ufin2} and \ref{sigmaMagn} we obtain similarly to \ref{sigmaNonmagn}
+\begin{multline}
+\frac{d \sigma_{J^{\prime} M_J}}{d \Omega} =
+q \sum_{\substack{m m_s\\(M_J^{\prime})}} \frac{d \sigma_m}{d \Omega}
+\left[ \Pi_{JJ^{\prime}} 
+\sum_{\substack{k=l\pm\frac{1}{2}\\ (\varkappa)}} (-1)^{k+\frac{1}{2}} 
+C^{k \varkappa}_{lm \, \frac{1}{2}m_s}
+C^{k \varkappa}_{J^{\prime} -M_J^{\prime} \, J M_J} 
+\right. \\ \left. 
+\sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}}  
+\Pi_{LS} \,
+C^{J}_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+Q(wLS | w^{\prime}S^{\prime}L^{\prime}) 
+\left \{
+\begin{array}{ccc}
+l & \frac{1}{2} & k \\[2mm]
+L & S & J \\[2mm]
+L^{\prime} & S^{\prime} & J^{\prime}
+\end{array}
+\right \} \right]^2
+\end{multline}
+%
+or
+%
+\begin{equation}
+\hspace{-1cm}
+\begin{split}
+\frac{d \sigma_{J^{\prime} M_J}}{d \Omega} = & \,
+q \sum_{m m_s} \frac{d \sigma_m}{d \Omega} 
+\left[ \Pi_{JJ^{\prime}} 
+\sum_{k=J\pm\frac{1}{2}} C^{k (m_s-M_J)}_{J -M_J, \, \frac{1}{2}m_s}
+C^{k (m_s-M_J)}_{l -m, \, J^{\prime} (m_s+m-M_J)} 
+\right. \\ & \left. \times
+\sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}}  
+\Pi_{LS} \,
+C^{J}_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+Q(wLS, w^{\prime}S^{\prime}L^{\prime}) 
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+\frac{1}{2} & k & S^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & l \\
+J^{\prime} & k & S^{\prime}
+\end{array}
+\right \}
+\right]^2
+\end{split}
+\end{equation}
+%
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Photoemission from CEF-split and/or Zeeman-split states}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+In presence of CEF and/or magnetic field, J is not a good quantum number. However, in order to simplify and speed up calculations, we considerably truncate the basis, considering only a single J term in the ground state. This approximation is acceptable when the admixture of other basis states to the ground state is negligible for the purpose of calculation. The possibility of such truncation is the main reason for using the LSJ basis. Otherwise, it would be much more easy to calculate photoemission using determinantal product states.
+
+Let us assume that the ground and excited states are formed as linear combinations of states with same $J$ and different $M_J$ (we neglect mixing of different $J$ in CEF and magnetic field):
+$$
+| \nu J \rangle \, = \, \sum_{M_J} A^{\nu}_{M_J} \, | JM_J \rangle
+= \, \sum_{wLS M_J} A^{\nu}_{M_J} C^J_{wLS} \, | wLSJM_J \rangle
+$$
+where $\nu$ distinguishes different states with same $J$.
+Then for the matrix element we obtain
+%
+\begin{multline}
+\langle f \mid \vec{\varepsilon} \cdot \vec{r}  \mid i \rangle = \sqrt{q}  
+\sum_{m,m_s} \sum_{\substack{wLS M_J\\w^{\prime}L^{\prime} S^{\prime} M_J^{\prime}}}
+Q(wLS,w^{\prime}L^{\prime} S^{\prime}) \, 
+A^{\nu}_{M_J} A^{\nu^{\prime}*}_{M_J^{\prime}} C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}} \\
+\times U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \,
+\langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle \,.
+\end{multline}
+%
+We obtain for the cross section
+\begin{multline}
+\frac{d \sigma_{J^{\prime}\nu^{\prime}\nu}}{d \Omega} = q \sum_{m_s} 
+\left| \sum_m \langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle 
+\sum_{M_J M_J^{\prime}} A^{\nu}_{M_J} A^{\nu^{\prime}*}_{M_J^{\prime}} \right. \\
+\left. 
+\sum_{\substack{wLS \\w^{\prime}L^{\prime} S^{\prime} }} Q(wLS,w^{\prime}L^{\prime} S^{\prime})
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \right|^2 \,.
+\end{multline}
+%
+In the particular case, when we can neglect CEF/Zeeman splitting in the final state, we sum over degenerate final states and get
+%
+\begin{multline}
+\frac{d \sigma_{J^{\prime}\nu}}{d \Omega} = q \sum_{m_s M_J^{\prime}} 
+\left| \sum_m \langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle 
+\sum_{M_J} A^{\nu}_{M_J} \right. \\
+\left. 
+\sum_{\substack{wLS \\w^{\prime}L^{\prime} S^{\prime} }} Q(wLS,w^{\prime}L^{\prime} S^{\prime})
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \right|^2 = \\ =
+q \sum_{m_s M_J^{\prime}} 
+\left| \sum_m \langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle 
+\sum_{(M_J)} A^{\nu}_{M_J} \right. \\
+\left. 
+\Pi_{JJ^{\prime}} \sum_{k (\varkappa)}
+(-1)^{k+\frac{1}{2}}
+C^{k\varkappa}_{lm \, \frac{1}{2}m_s} \,
+C^{k\varkappa}_{J^{\prime} -M_J^{\prime} \, J M_J} 
+\sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}} \Pi_{LS}
+Q(wLS,w^{\prime}L^{\prime} S^{\prime}) \, 
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+L^{\prime} & S^{\prime} & J^{\prime} \\
+l & \frac{1}{2} & k
+\end{array}
+\right \}
+\right|^2 \,.
+\end{multline}
+%
+Taking into account temperature-dependent occupation of levels $\nu$ we get
+%
+\begin{multline}
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = q \sum_{\nu m_s M_J^{\prime}} u_{\nu}(T)
+\left| \sum_m \langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle 
+\sum_{M_J} A^{\nu}_{M_J} \right. \\
+\left. 
+\sum_{\substack{wLS \\w^{\prime}L^{\prime} S^{\prime} }} Q(wLS,w^{\prime}L^{\prime} S^{\prime})
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \right|^2 = \\ =
+q \sum_{\nu m_s M_J^{\prime}} u_{\nu}(T)
+\left| \sum_m \langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle 
+\sum_{(M_J)} A^{\nu}_{M_J} \right. \\
+\left. 
+\Pi_{JJ^{\prime}} \sum_{k (\varkappa)}
+(-1)^{k+\frac{1}{2}}
+C^{k\varkappa}_{lm \, \frac{1}{2}m_s} \,
+C^{k\varkappa}_{J^{\prime} -M_J^{\prime} \, J M_J} 
+\sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}} \Pi_{LS}
+Q(wLS,w^{\prime}L^{\prime} S^{\prime}) \, 
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+L^{\prime} & S^{\prime} & J^{\prime} \\
+l & \frac{1}{2} & k
+\end{array}
+\right \}
+\right|^2 \,.
+\end{multline}
+%
+%
+In the particular case when only one $M_J$ is present in the single initial state $\nu$, we have
+%
+\begin{multline}
+\frac{d \sigma_{J^{\prime}\nu M_J}}{d \Omega} = q \sum_{m_s M_J^{\prime}} 
+\left| \sum_m \langle \chi \mid \vec{\varepsilon} \cdot \vec{r}  \mid lmm_s \rangle \right. \\
+\left. 
+\sum_{\substack{wLS \\w^{\prime}L^{\prime} S^{\prime} }} Q(wLS,w^{\prime}L^{\prime} S^{\prime})
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \right|^2 =\\=
+q \sum_{\substack{mm_s\\ (M_J^{\prime})}} \frac{d \sigma_m}{d \Omega}
+\left[ \sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}} Q(wLS,w^{\prime}L^{\prime} S^{\prime}) \, 
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \right]^2 =\\=
+q \sum_{\substack{mm_s\\ (M_J^{\prime})}} \frac{d \sigma_m}{d \Omega}
+\left[ \Pi_{JJ^{\prime}} \sum_{k (\varkappa)}
+(-1)^{k+\frac{1}{2}}
+C^{k\varkappa}_{lm \, \frac{1}{2}m_s} \,
+C^{k\varkappa}_{J^{\prime} -M_J^{\prime} \, J M_J} \right.\times \\ \times\left.
+\sum_{\substack{wLS\\w^{\prime}L^{\prime} S^{\prime}}} \Pi_{LS}
+Q(wLS,w^{\prime}L^{\prime} S^{\prime}) \, 
+C^J_{wLS} C^{J^{\prime}}_{w^{\prime}L^{\prime} S^{\prime}}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+L^{\prime} & S^{\prime} & J^{\prime} \\
+l & \frac{1}{2} & k
+\end{array}
+\right \} \right]^2 \,.
+\end{multline}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Example of paramagnetic Yb compound: CEF in the final state}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+Consider Yb$^2+$ with initial configuration $f^{14}$ (closed shell). There is no CEF splitting in the ground state since $J=M_J=0$. We analyze CEF in the final state. In this case, using Eq.~\ref{eq:Uclosed}, we get
+\begin{multline}
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = q \sum_{mm_s\nu^{\prime}} \frac{d \sigma_m}{d \Omega}
+\left[ \sum_{(M_J^{\prime})} A^{\nu^{\prime}}_{M_J^{\prime}}
+U(L S J M_J | L^{\prime} S^{\prime} J^{\prime} M_J^{\prime} l m m_s) \right]^2 = \\
+= q \sum_{mm_s\nu^{\prime}} \frac{d \sigma_m}{d \Omega}
+\left[ \sum_{(M_J^{\prime})} A^{\nu^{\prime}}_{M_J^{\prime}}
+\frac{(-1)^{J^\prime -M_J^\prime}}{\Pi_{\frac{1}{2} l}} C^{J^\prime -M_J^\prime}_{lm\,\frac{1}{2} m_s}
+\right]^2 = \sum_{mm_s\nu^{\prime}} \frac{d \sigma_m}{d \Omega}
+\sum_{(M_J^{\prime})} (A^{\nu^{\prime}}_{M_J^{\prime}})^2
+\left[ C^{J^\prime -M_J^\prime}_{lm\,\frac{1}{2} m_s}
+\right]^2
+\end{multline}
+%
+where $A_{M_J^{\prime}}$ are wave function amplitudes for CEF-split final states.
+The inner sum contains only one term with $M_J^{\prime}=-m-m_s$.
+For Kramers doublets we need a sum over two $\nu^{\prime}$ with $\pm M_J^{\prime}$.
+We have $|A_{M_J^{\prime}}|=|A_{-M_J^{\prime}}|$. Thus
+%
+$$
+\frac{d \sigma_{J^{\prime}}}{d \Omega} = 
+\sum_{M_J^{\prime} (m)m_s} A^2_{M_J^{\prime}} \frac{d \sigma_m}{d \Omega}
+\left( \left[ C^{J^\prime M_J^\prime}_{lm\,\frac{1}{2} m_s} \right]^2 
++ \left[ C^{J^\prime - M_J^\prime}_{lm\,\frac{1}{2} m_s} \right]^2 \right)
+$$
+%
+For $J^\prime=7/2$ we take into account that
+$$
+\left[ C^{J^\prime M_J^\prime}_{lm\,\frac{1}{2} \pm\frac{1}{2}} \right]^2 = \frac{l+1 \pm m}{2l+1} = \frac{4 \pm m}{7}
+$$
+and obtain
+%
+\begin{center}
+\begin{tabular}{ c | c | c }
+ & Basis & Photoemission cross section \\
+\hline
+ $\Gamma^{-}_{t6}$ & $|\pm7/2\rangle$, $|\pm1/2\rangle$ & $(\sigma_{-3} + \sigma_3) A^2_{7/2} + \left[\frac{3}{7}(\sigma_{-1} +\sigma_1) + \frac{8}{7}\sigma_0 \right] A^2_{1/2}$\\ 
+ $\Gamma^{-}_{t7}$ & $|\pm3/2\rangle$, $|\pm5/2\rangle$ & $\left[\frac{5}{7}(\sigma_{-1} + \sigma_1) + \frac{2}{7}(\sigma_{-2} + \sigma_2)\right] A^2_{3/2} + \left[\frac{6}{7}(\sigma_{-2} + \sigma_2) + \frac{1}{7}(\sigma_{-3} + \sigma_3)\right] A^2_{5/2}$ \\  
+\end{tabular}
+\end{center}
+%
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {One-electron photoemission matrix element}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+The wave function of electron in a free space is
+$$
+\chi_{free} = e^{i\mathbf{k}\cdot\mathbf{r}} =
+4\pi \sum_{l=0}^{\infty} \sum_{m=-l}^l i^l j_l(kr) Y_l^{m*}(\mathbf{k}) Y_l^m(\mathbf{r})
+$$
+where $j_l$ are spherical Bessel functions and complex conjugation $^*$ can be interchanged between the two spherical harmonics due to symmetry. 
+Wave function in central potential must have asymptotics 
+$$
+e^{i\mathbf{k}\cdot\mathbf{r}} + f(\theta) \frac{e^{ikr}}{r}
+$$
+such wave function expanded in spherical harmonics is (\S 123,136 in \cite{Landau3})
+$$
+\chi(\mathbf{k},\mathbf{r}) = 
+\sum_{l=0}^{\infty} \sum_{m=-l}^l i^l e^{i\delta_l} R_{kl}(kr) Y_l^{m*}(\mathbf{k}) Y_l^m(\mathbf{r}) 
+$$
+The one-electron wave function is
+$$
+\phi_{nlm} = R_{nl}(r) Y^l_m(\mathbf{r})
+$$
+The one-electron photoemission matrix element is
+\begin{multline}
+\langle \chi \mid \vec{\varepsilon} \cdot \vec{r} \mid \phi_{nlm} \rangle =
+\sum_{l^{\prime}m^{\prime}} \langle \chi_{l^{\prime}m^{\prime}}(\mathbf{k}) \mid \vec{\varepsilon} \cdot \vec{r} \mid \phi_{nlm} \rangle =
+\sum_{l^{\prime}m^{\prime}} \frac{1}{\Pi_{l^{\prime}}}
+\langle \mathbf{k}l^{\prime} || r\mathbf{C}^{(1)} || nl \rangle  \,
+\sum_q  \varepsilon_q C_{l m \, 1 q}^{l^{\prime} m^{\prime}} =\\
+= \sum_{l^{\prime}m^{\prime}} \frac{i^{l^{\prime}}}{\Pi_{l^{\prime}}} Y_{l^{\prime}}^{m^{\prime}}(\mathbf{k})
+\langle l^{\prime} || \mathbf{C}^{(1)} || l \rangle  \,
+\sum_q  \varepsilon_q C_{l m \, 1 q}^{l^{\prime} m^{\prime}} (-i)^{l^{\prime}}e^{-i\delta_{l^{\prime}}} \int r^3 R^*_{k{l^{\prime}}}(kr) R_{nl}(r) dr = \\
+= \sum_{l^{\prime}} \frac{(-i)^{l^{\prime}}e^{-i\delta_{l^{\prime}}}}{\Pi_{l^{\prime}}} R(kl^{\prime},nl) 
+\langle l^{\prime} || \mathbf{C}^{(1)} || l \rangle  \,
+\sum_{q m^{\prime}}  \varepsilon_q C_{l m \, 1 q}^{l^{\prime} m^{\prime}} Y_{l^{\prime}}^{m^{\prime}}(\mathbf{k})
+\end{multline}
+where $R(kl^{\prime},nl)$ is a radial matrix element.
+
+Consider linear polarization $\vec{\varepsilon}=(0,0,1)$. Let $R_{\pm}=R(k(l\pm 1),nl)$ Then, differential cross section is
+\begin{multline}
+\sigma_z (\theta) = \frac{1}{\Pi^2_{l}} \sum_m |\langle \chi \mid z \mid \phi_{nlm} \rangle|^2 =
+\sum_m \left| \sum_{l^{\prime}} \frac{(-i)^{l^{\prime}}e^{-i\delta_{l^{\prime}}}}{\Pi_{l^{\prime}}} R(kl^{\prime},nl)
+C_{l 0 \, 1 0}^{l^{\prime} 0}  \,
+C_{l m \, 1 0}^{l^{\prime} m} Y_{l^{\prime}}^m (\mathbf{k}) \right|^2 = \\
+= \frac{R_-^2}{\Pi^2_{(l-1)}} \sum_m \left| 
+C_{l 0 \, 1 0}^{(l-1) 0}  \,
+C_{l m \, 1 0}^{(l-1) m} Y_{l-1}^m (\mathbf{k}) \right|^2 +
+\frac{R_+^2}{\Pi^2_{(l+1)}} \sum_m \left| 
+C_{l 0 \, 1 0}^{(l+1) 0}  \,
+C_{l m \, 1 0}^{(l+1) m} Y_{l+1}^m (\mathbf{k}) \right|^2 - \\
+- 2 \mathrm{Re} \frac{R_+R_-^* e^{i(\delta_{l+1}-\delta_{l-1})} }{\Pi_{(l+1)(l-1)}} \sum_{m}
+C_{l 0 \, 1 0}^{(l+1) 0} C_{l 0 \, 1 0}^{(l-1) 0}  \,
+C_{l m \, 1 0}^{(l+1) m} C_{l m \, 1 0}^{(l-1) m}
+Y_{(l+1)}^m (\mathbf{k}) Y_{(l-1)}^{m*} (\mathbf{k})
+\end{multline}
+%
+Further one can use the relations
+$$
+C_{l m \, 1 0}^{(l+1) m} = \sqrt{\frac{(l+1)^2-m^2}{(l+1)(2l+1)}}, \qquad 
+C_{l m \, 1 0}^{(l-1) m} = -\sqrt{\frac{l^2-m^2}{l(2l+1)}}
+$$
+$$
+C_{l 0 \, 1 0}^{(l+1) 0} C_{l m \, 1 0}^{(l+1) m} = \frac{\sqrt{(l+1)^2-m^2}}{(2l+1)}, \qquad 
+C_{l 0 \, 1 0}^{(l-1) 0} C_{l m \, 1 0}^{(l-1) m} = \frac{\sqrt{l^2-m^2}}{(2l+1)}
+$$
+$$
+\sum_m |Y_l^m|^2 = \frac{2l+1}{4\pi}, \qquad 
+\sum_m m^2 |Y_l^m|^2 = \frac{l(l+1)(2l+1)}{8\pi} \sin^2 \theta
+$$
+$$
+\sum_{m=-l}^l \sqrt{((l+1)^2-m^2)(l^2-m^2)} Y_{(l-1)}^m Y_{l+1}^{m*} = \frac{l(l+1)}{8\pi}\sqrt{(2l-1)(2l+3)} (3\cos^2\theta - 1)
+$$
+$$
+P_2(\cos\theta) = \frac{3\cos^2\theta - 1}{2}
+$$
+to get 
+\begin{multline}
+\sigma_z (\theta) = 
+\frac{|R_-|^2}{\Pi^2_{(l-1)}} \sum_m \frac{l^2-m^2}{(2l+1)^2} \left| 
+Y_{l-1}^m (\mathbf{k}) \right|^2 +
+\frac{|R_+|^2}{\Pi^2_{(l+1)}} \sum_{m=-l}^l \frac{(l+1)^2-m^2}{(2l+1)^2} \left| 
+Y_{l+1}^m (\mathbf{k}) \right|^2 - \\
+- 2 \mathrm{Re} \frac{R_+R_-^* e^{i(\delta_{l+1}-\delta_{l-1})} }{\Pi_{(l+1)(l-1)}} \sum_{m}
+\frac{\sqrt{((l+1)^2-m^2)(l^2-m^2)}}{(2l+1)^2}
+Y_{(l+1)}^m (\mathbf{k}) Y_{(l-1)}^{m*} (\mathbf{k}) =\\
+%
+= \frac{l |R_-|^2}{8\pi \Pi^4_{l}} (l+1+(l-1)\cos^2\theta) +
+\frac{(l+1) |R_+|^2}{8\pi \Pi^4_{l}} (l+(l+2)\cos^2\theta) -\\
+-4 \frac{\mathrm{Re} R_+R_-^* e^{i(\delta_{l+1}-\delta_{l-1})} }{8\pi\Pi^4_{l}} l(l+1)P_2(\cos\theta)
+= \frac{1/3}{4\pi \Pi^4_{l}} [ l(2l+1)|R_-|^2  + (2l+1)(l+1)|R_+|^2 +\\
++ \left\{ l(l-1)|R_-|^2 + (l+1)(l+2)|R_+|^2 - 6l(l+1) \mathrm{Re}{R_+R_-^* e^{i(\delta_{l+1}-\delta_{l-1})} } \right\} P_2(\cos\theta)] =\\
+= \frac{\sigma_{nl}}{4\pi}(1+\beta_{nl} P_2(\cos\theta))
+\end{multline}
+%
+where
+\begin{equation}
+\sigma_{nl} = \frac{l|R_-|^2  + (l+1)|R_+|^2}{3(2l+1)}
+\label{eq:sigma_nl}
+\end{equation}
+$$
+\beta_{nl} = \frac{ l(l-1)|R_-|^2 + (l+1)(l+2)|R_+|^2 - 6l(l+1) \mathrm{Re}\{R_+R_-^* e^{i(\delta_{l+1}-\delta_{l-1})} \}}{(2l+1)(l|R_-|^2  + (l+1)|R_+|^2)}
+$$
+The radial matrix elements $R_{\pm}$ and phase shifts $\delta_{l\pm 1}$ must be calculated numerically as functions of the photon energy.
+
+More general formula valid also for circular polarization (in $XY$ plane) has the form (Eq.~3.15 in \cite{Amusia})
+$$
+\sigma_q = \frac{\sigma_{nl}}{4\pi}(1+(-2)^{-|q|}\beta_{nl} P_2(\cos\theta))
+$$
+%
+This formula is also valid for unpolarized light, which can be modeled as an average of two opposite circular polarizations.
+
+Let us consider angle-integrated one-electron photoemission cross section:
+\begin{equation}
+\sigma_{nlm} = \int_{\Omega} \left| \sum_{l^{\prime}} \frac{(-i)^{l^{\prime}}e^{-i\delta_{l^{\prime}}}}{\Pi_{l^{\prime}}} R(kl^{\prime},nl) 
+\langle l^{\prime} || \mathbf{C}^{(1)} || l \rangle  \,
+\sum_{q m^{\prime}}  \varepsilon_q C_{l m \, 1 q}^{l^{\prime} m^{\prime}} Y_{l^{\prime}}^{m^{\prime}}(\mathbf{k}) \right|^2 d\Omega
+\end{equation}
+%
+Due to orthonormality of spherical harmonics, i.e. $\int Y_l^m Y_{l^\prime}^{m^\prime *} d\Omega = \delta_{l l^\prime}\delta_{m m^\prime}$, we may write
+%
+\begin{equation}
+\sigma_{nlm} = \sum_{l^{\prime} m^{\prime}} \left| \frac{\Pi_l}{\Pi_{l^{\prime}}} R(kl^{\prime},nl) 
+C_{l 0 \, 1 0}^{l^{\prime} 0}  \,
+\sum_{q }  \varepsilon_q C_{l m \, 1 q}^{l^{\prime} m^{\prime}} \right|^2 
+\end{equation}
+%
+So the total angle-integrated cross section is a sum of partial cross sections.
+In the particular case of linear polarization along $z$, we get
+\begin{equation}
+\sigma_{nlm,z} = \sum_{l^{\prime} m^{\prime}} \left| \frac{\Pi_l}{\Pi_{l^{\prime}}} R(kl^{\prime},nl) 
+C_{l 0 \, 1 0}^{l^{\prime} 0}  \,
+C_{l m \, 1 0}^{l^{\prime} m^{\prime}} \right|^2 = 
+\frac{(l+1)^2-m^2}{\Pi^2_{l,l+1}} R^2_+ 
+-\frac{(l^2-m^2)}{\Pi^2_{l,l-1}} R^2_-
+\end{equation}
+%
+So the angle-integrated cross section is $m$-dependent and polarization-dependent.
+
+For unpolarized initial state of atom (nonmagnetic case) we should average the cross section over $m$. Then
+\begin{multline}
+\sigma_{nl} =
+\frac{1}{\Pi^2_l} \sum_{m,l^{\prime} m^{\prime}} \left| \frac{\Pi_l}{\Pi_{l^{\prime}}} R(kl^{\prime},nl) 
+C_{l 0 \, 1 0}^{l^{\prime} 0}  \,
+\sum_{q }  \varepsilon_q C_{l m \, 1 q}^{l^{\prime} m^{\prime}} \right|^2 = \\ =
+\sum_{l^{\prime} m^{\prime} m} \frac{R^2(kl^{\prime},nl)}{\Pi^2_{l^{\prime}}}  
+(C_{l 0 \, 1 0}^{l^{\prime} 0})^2  \,
+\sum_{q q^{\prime}}  \varepsilon_q \varepsilon^*_{q^{\prime}} C_{l m \, 1 q}^{l^{\prime} m^{\prime}} C_{l m \, 1 q^{\prime}}^{l^{\prime} m^{\prime}} =
+\sum_{l^{\prime} } \frac{R^2(kl^{\prime},nl)}{\Pi^2_{l^{\prime}}}  
+(C_{l 0 \, 1 0}^{l^{\prime} 0})^2  \,
+\sum_{q}  |\varepsilon_q|^2 \frac{\Pi^2_{l^{\prime}}}{\Pi^2_1} = \\ =
+\sum_{l^{\prime} } \frac{R^2(kl^{\prime},nl)}{3}  
+(C_{l 0 \, 1 0}^{l^{\prime} 0})^2 = 
+\frac{(l+1)R^2_+ + l R^2_-}{3(2l+1)}
+\end{multline}
+which is identical to \ref{eq:sigma_nl}, as expected. Thus, $\sigma_{nl}$ is the average one-electron cross section. Also we can see that the average cross-section $\sigma_{nl}$ could be readily obtained from \ref{eq:sigma_1} as a sum $\sigma(l-1,l)+\sigma(l+1,l)$. 
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Magnetic circular dichroism (MCD) in angle-integrated photoemission}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+Consider an atom (no CEF) in magnetic field. The partial cross section is
+\begin{multline}
+\sigma(j^{\prime},j) = \sum_{m_j m_j^{\prime}}
+|\langle j^{\prime} m_j^{\prime} \mid \vec{\varepsilon} \cdot \vec{r} \mid j m_j \rangle |^2 u_{m_j}
+= \frac{|\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2}{\Pi_{j^{\prime}}^2}  
+\sum_{m_j m_j^{\prime}} \left| \sum_{q} \varepsilon_q
+C_{j m_j \, 1 q}^{j^{\prime} m_j^{\prime}}\right|^2 u_{m_j} = \\ =
+\frac{|\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2}{\Pi_{j^{\prime}}^2}  
+\sum_{m_j m_j^{\prime} q} |\varepsilon_q|^2
+\left(C_{j m_j \, 1 q}^{j^{\prime} m_j^{\prime}}\right)^2 u_{m_j}
+\end{multline}
+%
+We assume circular polarization with either $\varepsilon=\{1,0,0\}$ ($q=-1$) or $\varepsilon=\{0,0,1\}$ ($q=1$). Then, the partial angle-integrated cross section for a given polarization is
+%
+\begin{equation}
+\sigma_q (j^{\prime},j) = 
+\frac{|\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2}{\Pi_{j^{\prime}}^2}
+\sum_{m_j m_j^{\prime}} \left( C_{j m_j \, 1 q}^{j^{\prime} m_j^{\prime}}\right)^2 u_{m_j}
+\end{equation}
+%
+The total angle-integrated cross section is
+%
+\begin{equation}
+\sigma_q (j) = \sum_{j^{\prime}} \sigma_q (j^{\prime},j) =
+\sum_{j^{\prime}}
+\frac{|\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2}{\Pi_{j^{\prime}}^2}
+\sum_{m_j m_j^{\prime}} \left( C_{j m_j \, 1 q}^{j^{\prime} m_j^{\prime}}\right)^2 u_{m_j}
+\end{equation}
+%
+The difference between two intensities at different polarizations is (using Eq.~8.6.5 in \cite{Varshalovich})
+%
+\begin{multline}
+\sigma_1 (j) -\sigma_{-1}(j) = \sum_{j^{\prime} m_j m_j^{\prime}}
+\frac{|\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2}{\Pi_{j^{\prime}}^2}
+\left[\left( C_{j m_j \, 1 1}^{j^{\prime} m_j^{\prime}}\right)^2 - \left( C_{j m_j \, 1 -1}^{j^{\prime} m_j^{\prime}}\right)^2 \right] u_{m_j} = \\ =
+\sum_{j^{\prime} m_j }
+\frac{|\langle j^{\prime} || r\mathbf{C}^{(1)} || j \rangle|^2}{\Pi_{j^{\prime}}^2}
+u_{m_j}
+\left[\left( C_{j m_j \, 1 1}^{j^{\prime} (m_j+1)}\right)^2 - \left( C_{j m_j \, 1 -1}^{j^{\prime} (m_j-1)}\right)^2 \right] 
+\end{multline}
+%
+The values of coefficients are given in Tab.~\ref{tab:Cval}.
+\begin{table*}[h]
+	\begin{center}
+		\begin{tabular}{c|c|c|c}
+   & $q=\pm 1$ & $q=0$ & $\frac{1}{\Pi^2_{j^{\prime}}}\left[\left( C_{j m \, 1 1}^{j^{\prime} (m+1)}\right)^2 - \left( C_{j m \, 1 -1}^{j^{\prime} (m-1)}\right)^2\right]$\\
+\hline	
+$j^{\prime} = j-1$ & \large $\frac{j(j-1) \mp(2j-1)m + m^2}{2j(2j+1)}$ & \large $\frac{j^2-m^2}{j(2j+1)}$ & \large $\frac{-m}{j(2j+1)}$ \\
+\hline
+$j^{\prime} = j$ & \large $\frac{j(j+1) \mp m - m^2}{2j(j+1)}$ & \large $\frac{m^2}{j(j+1)}$ & \large $\frac{-m}{j(j+1)(2j+1)}$ \\
+\hline
+$j^{\prime} = j+1$ & \large $\frac{(j+1)(j+2) \pm (2j+3)m + m^2}{2(j+1)(2j+1)}$ & \large $\frac{(j+1)^2-m^2}{(j+1)(2j+1)}$ & \large $\frac{m}{(j+1)(2j+1)}$
+		\end{tabular}
+	\end{center}
+	\caption{Values of coefficients $\left(C_{j m \, 1 q}^{j^{\prime} (m+q)}\right)^2$.}
+	\label{tab:Cval}
+\end{table*}
+
+Hence,
+\begin{multline}
+\sigma_1 (j) -\sigma_{-1}(j) = \\ =
+\frac{1}{\Pi_{j}^2}
+\left[ \frac{|\langle j+1 || D || j \rangle|^2}{(j+1)}
+- \frac{|\langle j-1 || D || j \rangle|^2}{j} 
+-\frac{|\langle j || D || j \rangle|^2}{j(j+1)} \right]
+\sum_{m_j } m_j u_{m_j} = \\ =
+\frac{\langle m_j \rangle}{\Pi_{j}^2}
+\left[ \frac{|\langle j+1 || D || j \rangle|^2}{(j+1)}
+- \frac{|\langle j-1 || D || j \rangle|^2}{j} 
+-\frac{|\langle j || D || j \rangle|^2}{j(j+1)} \right]
+\end{multline}
+%
+where $\langle m_j \rangle$ is the angular magnetic moment. Thus, MCD signal is proportional to the angular magnetic moment. Note that this result is valid in the absence of CEF splitting and for the case when the ground state is well-separated in energy from the other states.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Magnetic linear dichroism (MLD) in angle-integrated photoemission}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+Consider two polarizations: parallel to magnetization ($\varepsilon_z=1$) and perpendicular to magnetization ($\varepsilon_x=1$). We readily obtain the angle-integrated cross section as
+%
+\begin{multline}
+\sigma_z(j^{\prime},j) - \sigma_x(j^{\prime},j) = 
+\frac{|\langle j^{\prime} || D || j \rangle|^2}{\Pi_{j^{\prime}}^2} \sum_{m_j} u_{m_j}
+\left[ \left( C_{j m_j \, 1 0}^{j^{\prime} m_j}\right)^2 -
+\frac{1}{2}\left( C_{j m_j \, 1 -1}^{j^{\prime} (m_j-1)}\right)^2 - \frac{1}{2}\left(C_{j m_j \, 1 +1}^{j^{\prime} (m_j+1)}\right)^2 \right]
+\end{multline}
+%
+The values are given in Tab.~\ref{tab:Cval2}.
+%
+\begin{table*}[h]
+	\begin{center}
+		\begin{tabular}{c|c}
+   & $ \left( C_{j m \, 1 0}^{j^{\prime} m}\right)^2 -
+\frac{1}{2}\left( C_{j m \, 1 -1}^{j^{\prime} (m-1)}\right)^2 - \frac{1}{2}\left(C_{j m \, 1 +1}^{j^{\prime} (m+1)}\right)^2$ \\
+\hline	
+$j^{\prime} = j-1$ & \large $\frac{j(j+1)-3m^2}{2j(2j+1)}$ \\
+\hline
+$j^{\prime} = j$ & \large $-\frac{j(j+1)-3m^2}{2j(j+1)}$ \\
+\hline
+$j^{\prime} = j+1$ & \large $\frac{j(j+1)-3m^2}{2(j+1)(2j+1)}$
+		\end{tabular}
+	\end{center}
+	\caption{Values of coefficient.}
+	\label{tab:Cval2}
+\end{table*}
+
+Thus, we obtain (using Eq.~\ref{eq:MJ2})
+\begin{multline}
+\sigma_z(j) - \sigma_x(j) = \sum_{j^{\prime}} \sigma_z(j^{\prime},j) - \sigma_x(j^{\prime},j) = \\ =
+\left[ \frac{|\langle j-1 || D || j \rangle|^2}{(2j-1)j} -
+\frac{|\langle j || D || j \rangle|^2}{j(j+1)} +
+\frac{|\langle j+1 || D || j \rangle|^2}{(2j+3)(j+1)} \right]
+\sum_{m_j} u_{m_j} \frac{3j(j+1)-3m_j^2}{2(2j+1)} = \\ =
+\left[ \frac{|\langle j-1 || D || j \rangle|^2}{(2j-1)j} -
+\frac{|\langle j || D || j \rangle|^2}{j(j+1)} +
+\frac{|\langle j+1 || D || j \rangle|^2}{(2j+3)(j+1)} \right]
+\frac{3}{2(2j+1)}\left[j(j+1)-\langle m_j^2 \rangle \right] = \\ =
+\left[ \frac{|\langle j-1 || D || j \rangle|^2}{(2j-1)j} -
+\frac{|\langle j || D || j \rangle|^2}{j(j+1)} +
+\frac{|\langle j+1 || D || j \rangle|^2}{(2j+3)(j+1)} \right]
+\frac{3}{2(2j+1)}
+\langle m_j \rangle \coth\left(\frac{y}{2j}\right)
+\end{multline}
+%
+where $y$ is a function of temperature, which can be found from Eq.~\ref{eq:BrilEq}. At $T=0$ we have $y\rightarrow\infty$ and $\coth=1$, therefore, the MLD signal is proportional to the moment. This result is valid in the absence of CEF splitting and for the case when the ground state is well-separated in energy from the other states.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Transition between two shells $l_1^n l_2^{k-1} \leftrightarrow l_1^{n-1} l_2^k$ in LSJ coupling}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+The reduced matrix element is
+%
+\begin{multline}
+D_{LS} \equiv \langle (w_1 L_1 S_1, w_2 L_2 S_2)LS, J || D || (w_1^{\prime} L_1^{\prime} S_1^{\prime}, w_2^{\prime} L_2^{\prime} S_2^{\prime})L^{\prime}S^{\prime}, J^{\prime} \rangle = \\ =
+\delta_{S,S^{\prime}} (-1)^{L+S+J^{\prime}+1} \Pi_{JJ^{\prime}} 
+\left \{
+\begin{array}{ccc}
+J & J^{\prime} & 1 \\
+L^{\prime} & L & S
+\end{array}
+\right \}
+\langle (w_1 L_1 S_1, w_2 L_2 S_2)LS || D || (w_1^{\prime} L_1^{\prime} S_1^{\prime}, w_2^{\prime} L_2^{\prime} S_2^{\prime})L^{\prime}S^{\prime} \rangle
+\end{multline}
+%
+Now we decouple one electron from $l_1^n$ and one electron from $l_2^k$ 
+%
+\begin{multline}
+\langle (w_1^{\prime} L_1^{\prime} S_1^{\prime}, l_1 s_{1(N)}) w_1 L_1 S_1, w_2 L_2 S_2 ; LS || D_N || w_1^{\prime} L_1^{\prime} S_1^{\prime}, (w_2 L_2 S_2, l_2 s_{2(N)}) w_2^{\prime} L_2^{\prime} S_2^{\prime} ; L^{\prime}S^{\prime} \rangle \times \\ \times
+\sqrt{nk} Q(w_1 L_1 S_1 | w_1^{\prime} L_1^{\prime} S_1^{\prime})
+Q(w_2^{\prime} L_2^{\prime} S_2^{\prime} | w_2 L_2 S_2)
+\end{multline}
+%
+Then, we recouple $l_1s_1$ (Eq.~9.1.7 twice)
+%
+\begin{multline}
+\langle (w_1^{\prime} L_1^{\prime} S_1^{\prime}, l_1 s_{1(N)}) w_1 L_1 S_1, w_2 L_2 S_2 ; LS || D_N || w_1^{\prime} L_1^{\prime} S_1^{\prime}, (w_2 L_2 S_2, l_2 s_{2(N)}) w_2^{\prime} L_2^{\prime} S_2^{\prime} ; L^{\prime}S^{\prime} \rangle = \\ =
+\sum_{L_R S_R} (-1)^{L_1^{\prime}+L+L_R+S_1^{\prime}+S+S_R} \Pi_{L_1 L_R S_1 S_R}
+\left \{
+\begin{array}{ccc}
+L_1^{\prime} & l_1 & L_1 \\
+L_2 & L & L_R
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+S_1^{\prime} & s & S_1 \\
+S_2 & S & S_R
+\end{array}
+\right \} \times \\ \times
+\langle L_1^{\prime}, (L_2, l_{1(N)}) L_R ; L || D_N || L_1^{\prime}, (L_2, l_{2(N)}) L_2^{\prime} ; L^{\prime} \rangle \delta_{S_R, S_2^{\prime}}
+\end{multline}
+%
+Then, we use Eq.~\ref{eq:Uk2}
+%
+\begin{multline}
+\langle L_1^{\prime}, (L_2, l_{1(N)}) L_R ; L || D_N || L_1^{\prime}, (L_2, l_{2(N)}) L_2^{\prime} ; L^{\prime} \rangle = \\ =
+(-1)^{L_1^{\prime}+L_2^{\prime}+L+1} \Pi_{LL^{\prime}}
+\left \{
+\begin{array}{ccc}
+L & L^{\prime} & 1 \\
+L_2^{\prime} & L_R & L_1^{\prime}
+\end{array}
+\right \}
+\langle (L_2, l_{1(N)}) L_R || D_N || (L_2, l_{2(N)}) L_2^{\prime} \rangle
+\end{multline}
+%
+and once more we use Eq.~\ref{eq:Uk2}
+%
+\begin{equation}
+\langle (L_2, l_{1(N)}) L_R || D_N || (L_2, l_{2(N)}) L_2^{\prime} \rangle = 
+(-1)^{L_2+l_2+L_R+1} \Pi_{L_R L_2^{\prime}}
+\left \{
+\begin{array}{ccc}
+L_R & L_2^{\prime} & 1 \\
+l_2 & l_1 & L_2
+\end{array}
+\right \}
+\langle l_1 || D || l_2 \rangle
+\end{equation}
+%
+Now consider all terms with $L_R$ and Eq.~10.2.20 in \cite{Varshalovich}:
+%
+\begin{multline}
+\sum_{L_R} (-1)^{2L_R} \Pi_{L_R}^2
+\left \{
+\begin{array}{ccc}
+L_2 & L & L_1 \\
+L_1^{\prime} & l_1 & L_R
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+L_2^{\prime} & L^{\prime} & L_1^{\prime} \\
+L & L_R & 1
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+l_2 & 1 & l_1 \\
+L_R & L_2 & L_2^{\prime}
+\end{array}
+\right \} =
+\left \{
+\begin{array}{ccc}
+L_2 & L & L_1 \\
+L_2^{\prime} & L^{\prime} & L_1^{\prime} \\
+l_2 & 1 & l_1
+\end{array}
+\right \}
+\end{multline}
+%
+Finally, for the total matrix element we obtain
+%
+\begin{multline}
+D_{LS} = \delta_{S,S^{\prime}}
+%
+(-1)^{1+S_1^{\prime}+S_2^{\prime} +L_2^{\prime}+L +L_2+l_2 -J^{\prime}} \Pi_{JJ^{\prime} S_1 S_2^{\prime} L L^{\prime} L_1 L_2^{\prime}}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+J^{\prime} & 1 & L^{\prime}
+\end{array}
+\right \}
+\left \{
+\begin{array}{ccc}
+S_1 & S_2 & S \\
+S_2^{\prime} & S_1^{\prime} & s
+\end{array}
+\right \} \times \\ \times
+%
+\left \{
+\begin{array}{ccc}
+L_1 & L_2 & L \\
+L_1^{\prime} & L_2^{\prime} & L^{\prime} \\
+l_1 & l_2 & 1
+\end{array}
+\right \}
+%
+\sqrt{nk}\, Q(w_1 L_1 S_1 | w_1^{\prime} L_1^{\prime} S_1^{\prime})
+Q(w_2^{\prime} L_2^{\prime} S_2^{\prime} | w_2 L_2 S_2)
+\langle l_1 || D || l_2 \rangle
+\end{multline}
+%
+This result is similar to Cowan's Eq.~14.88 \cite{Cowan}.
+
+In the particular case of transition from a closed to an open shell $l_1^{n} l_2^{4l_2+1} \leftarrow l_1^{n-1} l_2^{4l_2+2}$ we have $L_2^{\prime}=S_2^{\prime}=0$ and the result is simplified to
+\begin{multline}
+D_{LS}^{closed} = \delta_{S,S^{\prime},S_1^{\prime}} \delta_{S_2,\frac{1}{2}} \delta_{l_2,L_2} \delta_{L^{\prime}, L_1^{\prime}}
+%
+(-1)^{L-J^{\prime} -S_1+\frac{1}{2}} \frac{\Pi_{JJ^{\prime} S_1 L L_1}}{\Pi_S}
+\left \{
+\begin{array}{ccc}
+L & S & J \\
+J^{\prime} & 1 & L_1^{\prime}
+\end{array}
+\right \}
+\times \\ \times
+%
+\left \{
+\begin{array}{ccc}
+1 &l_1 & l_2 \\
+L_1 & L & L_1^{\prime}
+\end{array}
+\right \}
+%
+\sqrt{n}\, Q(w_1 L_1 S_1 | w_1^{\prime} L_1^{\prime} S_1^{\prime})
+\langle l_1 || D || l_2 \rangle
+\end{multline}
+%
+In the particular case of Eu$^{2+}$ $4f^8 4d^{9} \leftarrow 4f^7 4d^{10}$ transition we have $S_1^{\prime}=7/2$, $L_1^{\prime}=L_2^{\prime}=S_2^{\prime}=0$ and the result is further simplified to
+%
+\begin{multline}
+D_{LS}^{Eu^{2+}} = \delta_{\frac{7}{2},S,S^{\prime},S_1^{\prime},J^{\prime}} \delta_{S_2,\frac{1}{2}} \delta_{2,L_2} \delta_{L^{\prime}, 0} \delta_{L, 1} \delta_{L_1, 3}
+(-1)^{J -S_1+\frac{1}{2}} \frac{\Pi_{J 3}}{\Pi_{1}}
+Q(w_1 L_1 S_1 | w_1^{\prime} L_1^{\prime} S_1^{\prime})
+\langle l_1 || D || l_2 \rangle
+\end{multline}
+%
+Due to 6j-symbol, $S_1=3$. Initial state term is $4f^7 (^8S) 4d^{10} (^1S) (^8S_{\frac{7}{2}})$. Final state term is $4f^8 (^7F) 4d^{9} (^2D) (^8P_J)$ with three $J$ values. $Q^2=\frac{1}{7}$. Total cross section is
+$$
+\sigma_{LS}^{Eu^{2+}} = \sum_J \frac{\Pi^2_{J 3,2}}{\Pi^2_{1,\frac{7}{2}}}  \sigma(f,d)
+Q^2(f^8(^7F) | f^7(^8S)) = \frac{1}{7} \sigma(f,d)  \frac{7\cdot 5}{3\cdot 8} \sum_J \Pi^2_{J} = 5\, \sigma(f,d) 
+$$
+which is rather obvious because only five $d$ electrons can be excited into the half-filled $f$-shell.
+%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection {Resonant photoemission}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+The matrix element in resonance is
+%
+$$
+\langle f \mid T \mid i \rangle \approx
+\langle f \mid \vec{\varepsilon} \cdot \vec{r} \mid i \rangle +
+\sum_t \frac{\langle f \mid V \mid t \rangle \langle t \mid \vec{\varepsilon} \cdot \vec{r} \mid i \rangle}{E_t-E_i-E-i\Gamma_t} \,
+$$
+%
+where $|t\rangle$ are intermediate states, $V$ is a Coulomb operator
+$$
+V = \sum_{i>j} \frac{e^2}{r_{ij}}
+$$
+For $d\rightarrow f$ resonance, we have
+
+
+$$
+|i\rangle = | d^{10},f^q \rangle
+$$
+$$
+|t\rangle = | d^9, f^{q+1} \rangle
+$$
+$$ 
+| f \rangle = | d^{10}, f^{q-1}, \chi \rangle
+$$
+
+To be continued ...
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{achemso}
+\bibliography{PE_4f}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\end{document}
